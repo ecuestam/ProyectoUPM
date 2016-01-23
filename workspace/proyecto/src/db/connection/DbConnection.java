@@ -3,7 +3,7 @@ package db.connection;
 import java.sql.*;
 
 /**
- * Clase que permite conectar con la base de datos
+ * Clase que permite conectar con la base de datos prueba
  * 
  **/
 
