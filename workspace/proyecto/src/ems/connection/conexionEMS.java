@@ -120,6 +120,8 @@ public class conexionEMS
 		System.out.println ("Conexiones: " + String.valueOf(infoServer.getConnectionCount()));
 		//System.out.println(info);
 		String info = infoServer.toString();
+		System.out.println ("Start time: " + infoServer.getStartTime());
+		System.out.println("Uptime: " + infoServer.getUpTime());
 		StringTokenizer token = new StringTokenizer(info, ";");
 		while (token.hasMoreTokens())
 		{
