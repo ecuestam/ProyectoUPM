@@ -1,8 +1,7 @@
 package ems.vo;
 
-public class ServerVO {
+public class Server {
 	
-	// Attributes
 	private int connectionCount;
 	private int consumerCount;
 	private int diskReadRate;
@@ -22,7 +21,7 @@ public class ServerVO {
 	private int upTime;
 	private String url;
 	
-	public ServerVO(){}
+	public Server(){}
 	
 	public int getConnectionCount(){
 		return this.connectionCount;
