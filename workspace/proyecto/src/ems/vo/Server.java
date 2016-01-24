@@ -9,7 +9,6 @@ public class Server {
 	private int inboundBytesRate;
 	private int inboundMsgCount;
 	private int inboundMsgRate;
-	private float msgMem;
 	private int outboundMsgCount;
 	private int outboundMsgRate;
 	private int pendingMsgCount;
@@ -19,6 +18,7 @@ public class Server {
 	private int sessionCount;
 	private int topicCount;
 	private int upTime;
+	private float msgMem;
 	private String url;
 	
 	public Server(){}
@@ -77,14 +77,6 @@ public class Server {
 	
 	public void setInboundMsgRate(int inboundMsgRate){
 		this.inboundMsgRate = inboundMsgRate;
-	}
-	
-	public float getMsgMem(){
-		return this.msgMem;
-	}
-	
-	public void setMsgMem(float msgMem){
-		this.msgMem = msgMem;
 	}
 	
 	public int getOutboundMsgCount(){
@@ -157,6 +149,14 @@ public class Server {
 	
 	public void setUpTime(int upTime){
 		this.upTime = upTime;
+	}
+	
+	public float getMsgMem(){
+		return this.msgMem;
+	}
+	
+	public void setMsgMem(float msgMem){
+		this.msgMem = msgMem;
 	}
 	
 	public String getUrl(){
