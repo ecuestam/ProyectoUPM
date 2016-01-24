@@ -3,21 +3,18 @@ package ems.client;
 /* 
  * Esta clase se suscribe a un destino y recibe sus mensajes
  *
- * Usage:  java tibjmsMsgConsumer [options]
+ * Uso:  java MsgConsumer [opciones]
  *
  *    where options are:
  *
- *      -server     Server URL.
- *                  If not specified this sample assumes a
- *                  serverUrl of "tcp://localhost:7222"
- *
- *      -user       User name. Default is null.
- *      -password   User password. Default is null.
- *      -topic      Topic name. Default is "topic.sample"
- *      -queue      Queue name. No default
- *      -ackmode    Message acknowledge mode. Default is AUTO.
- *                  Other values: DUPS_OK, CLIENT, EXPLICIT_CLIENT,
- *                  EXPLICIT_CLIENT_DUPS_OK and NO.
+ *   -server    <url-servidor>
+ *   -user      <nombre-usuario>
+ *   -password  <password>
+ *   -topic     <nombre-topic>
+ *   -queue     <nombre-cola>
+ *   -ackmode   <modo-ack>. Por defecto es AUTO.
+ *              Otros valores posbiles: DUPS_OK, CLIENT, EXPLICIT_CLIENT,
+ *              EXPLICIT_CLIENT_DUPS_OK and NO.
  *
  *
  */
@@ -35,7 +32,7 @@ public class MsgConsumer
      String           serverUrl   = null;
      String           userName    = null;
      String           password    = null;
-     String           name        = "topic.sample";
+     String           name        = null;
      boolean          useTopic    = true;
      int              ackMode     = Session.AUTO_ACKNOWLEDGE;
 
@@ -69,22 +66,22 @@ public class MsgConsumer
 
 
     /*-----------------------------------------------------------------------
-     * usage
+     * Uso
      *----------------------------------------------------------------------*/
     void usage()
     {
-        System.err.println("\nUsage: tibjmsMsgConsumer [options] [ssl options]");
+        System.err.println("\nUso: MsgConsumer [opciones]");
         System.err.println("");
-        System.err.println("   where options are:");
+        System.err.println(" las opciones son:");
         System.err.println("");
-        System.err.println(" -server   <server URL> - EMS server URL, default is local server");
-        System.err.println(" -user     <user name>  - user name, default is null");
-        System.err.println(" -password <password>   - password, default is null");
-        System.err.println(" -topic    <topic-name> - topic name, default is \"topic.sample\"");
-        System.err.println(" -queue    <queue-name> - queue name, no default");
-        System.err.println(" -ackmode  <ack-mode>   - acknowledge mode, default is AUTO");
-        System.err.println("                          other modes: CLIENT, DUPS_OK, NO,");
-        System.err.println("                          EXPLICIT_CLIENT and EXPLICIT_CLIENT_DUPS_OK");
+        System.err.println("   -server   <server URL> - EMS server URL, default is local server");
+        System.err.println("   -user     <user name>  - user name, default is null");
+        System.err.println("   -password <password>   - password, default is null");
+        System.err.println("   -topic    <topic-name> - topic name, default is \"topic.sample\"");
+        System.err.println("   -queue    <queue-name> - queue name, no default");
+        System.err.println("   -ackmode  <ack-mode>   - acknowledge mode, por defecto es AUTO");
+        System.err.println("                            Otro modos posibles: CLIENT, DUPS_OK, NO,");
+        System.err.println("                            EXPLICIT_CLIENT and EXPLICIT_CLIENT_DUPS_OK");
         System.exit(0);
     }
 
