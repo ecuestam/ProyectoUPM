@@ -4,8 +4,9 @@ public class Consumer {
 
 	private int id;
 	private int msgRate;
-	private int totalMsg;
+	private int totalMsgs;
 	private int connectionId;
+	private int sessionId;
 	private long createTime;
 	private String destinationName;
 	private String destinationType;
@@ -28,12 +29,12 @@ public class Consumer {
 		this.msgRate = msgRate;
 	}
 
-	public int getTotalMsg(){
-		return this.totalMsg;
+	public int getTotalMsgs(){
+		return this.totalMsgs;
 	}
 	
-	public void setTotalMsg(int totalMsg){
-		this.totalMsg = totalMsg;
+	public void setTotalMsgs(int totalMsgs){
+		this.totalMsgs = totalMsgs;
 	}
 
 	public int getConnectionId(){
@@ -42,6 +43,14 @@ public class Consumer {
 	
 	public void setConnectionId(int connectionId){
 		this.connectionId = connectionId;
+	}
+
+	public int getSessionId(){
+		return this.sessionId;
+	}
+	
+	public void setSessionId(int sessionId){
+		this.sessionId = sessionId;
 	}
 
 	public long getCreateTime(){
