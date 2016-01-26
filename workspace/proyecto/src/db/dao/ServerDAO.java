@@ -15,12 +15,12 @@ import ems.vo.Server;
  */
 public class ServerDAO
 {
- 
+
 	/**
 	 * Añade la información de un servidor a la BBDD
 	 * @param server
 	 */
-	public void addServerInfo(ems.vo.Server server) 
+	public void addServerInfo(ems.vo.Server server)
 	{
 		DbConnection conexion = new DbConnection();
 		try {
@@ -38,7 +38,7 @@ public class ServerDAO
 		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();
-	
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			JOptionPane.showMessageDialog(null, "No se pudo realizar el registro de los datos del servidor.");

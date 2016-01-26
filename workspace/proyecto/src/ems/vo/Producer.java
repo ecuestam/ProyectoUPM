@@ -3,12 +3,13 @@ package ems.vo;
 public class Producer {
 	
 	private int id;
-	private int msgRate;
-	private int totalMsg;
-	private int connectionId;
 	private long createTime;
 	private String destinationName;
 	private String destinationType;
+	private int connectionId;
+	private int sessionId;
+	private int msgRate;
+	private int totalMsgs;
 	
 	public Producer(){}
 	
@@ -18,30 +19,6 @@ public class Producer {
 	
 	public void setId(int id){
 		this.id = id;
-	}
-
-	public int getMsgRate(){
-		return this.msgRate;
-	}
-	
-	public void setMsgRate(int msgRate){
-		this.msgRate = msgRate;
-	}
-
-	public int getTotalMsg(){
-		return this.totalMsg;
-	}
-	
-	public void setTotalMsg(int totalMsg){
-		this.totalMsg = totalMsg;
-	}
-
-	public int getConnectionId(){
-		return this.connectionId;
-	}
-	
-	public void setConnectionId(int connectionId){
-		this.connectionId = connectionId;
 	}
 
 	public long getCreateTime(){
@@ -66,6 +43,38 @@ public class Producer {
 	
 	public void setDestinationType(String destinationType){
 		this.destinationType = destinationType;
+	}
+
+	public int getConnectionId(){
+		return this.connectionId;
+	}
+	
+	public void setConnectionId(int connectionId){
+		this.connectionId = connectionId;
+	}
+	
+	public int getSessionId(){
+		return this.sessionId;
+	}
+	
+	public void setSessionId(int sessionId){
+		this.sessionId = sessionId;
+	}
+
+	public int getMsgRate(){
+		return this.msgRate;
+	}
+	
+	public void setMsgRate(int msgRate){
+		this.msgRate = msgRate;
+	}
+
+	public int getTotalMsgs(){
+		return this.totalMsgs;
+	}
+	
+	public void setTotalMsgs(int totalMsgs){
+		this.totalMsgs = totalMsgs;
 	}
 
 }

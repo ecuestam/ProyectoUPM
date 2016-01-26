@@ -19,16 +19,15 @@ public class ConsumerDAO {
 	 * Añade la información de un servidor a la BBDD
 	 * @param consumer
 	 */
-	public void addServerInfo(ems.vo.Consumer consumer)
+	public void addConsumerInfo(ems.vo.Consumer consumer)
 	{
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
 			estatuto.executeUpdate("INSERT INTO consumers VALUES ('" + consumer.getId() + "', '"
 			+ consumer.getCreateTime() + "', '"+ consumer.getDestinationName() + "', '"
-			+ consumer.getMsgRate() + "', '" + consumer.getTotalMsgs() + "', '"
-			+ consumer.getConnectionId() + consumer.getSessionId() + "', '"
-			+ consumer.getDestinationType() + "')");
+			+ consumer.getDestinationType() + "', '" + consumer.getConnectionId() + "', '"
+			+ consumer.getSessionId() + consumer.getMsgRate() + "', '" + consumer.getTotalMsgs() + "')");
 		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();
