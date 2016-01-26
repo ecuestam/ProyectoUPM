@@ -1,19 +1,34 @@
 package ems.vo;
 
 public class Store {
-
+	
+	private String name;
+	private String fileName;
 	private int fileSize;
 	private int freeSpace;
 	private int usedSpace;
 	private int fragmentation;
 	private int msgSize;
 	private int msgCount;
-	private String name;
-	private String fileName;
 	
 	public Store(){}
-	
 
+	public String getName(){
+		return this.name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public String getFileName(){
+		return this.fileName;
+	}
+	
+	public void setFileName(String fileName){
+		this.fileName = fileName;
+	}
+	
 	public int getFileSize(){
 		return this.fileSize;
 	}
@@ -60,22 +75,6 @@ public class Store {
 	
 	public void setMsgCount(int msgCount){
 		this.msgCount = msgCount;
-	}
-
-	public String getName(){
-		return this.name;
-	}
-	
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getFileName(){
-		return this.fileName;
-	}
-	
-	public void setFileName(String fileName){
-		this.fileName = fileName;
 	}
 	
 }

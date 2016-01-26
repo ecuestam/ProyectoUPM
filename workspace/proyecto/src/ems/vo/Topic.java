@@ -2,18 +2,42 @@ package ems.vo;
 
 public class Topic {
 	
+	private String name;
+	private int producerId;
+	private int consumerId;
 	private int pendingMsgCount;
 	private int pendingMsgSize;
-	private int inTotalMsg;
-	private int outTotalMsg;
+	private int suscriberCount;
+	private int inTotalMsgs;
+	private int outTotalMsgs;
 	private int inMsgRate;
 	private int outMsgRate;
-	private int consumerId;
-	private int producerId;
-	private int suscriberCount;
-	private String name;
 	
 	public Topic(){}
+	
+	public String getName(){
+		return this.name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+
+	public int getProducerId(){
+		return this.producerId;
+	}
+	
+	public void setProducerId(int producerId){
+		this.producerId = producerId;
+	}
+
+	public int getConsumerId(){
+		return this.consumerId;
+	}
+	
+	public void setConsumerId(int consumerId){
+		this.consumerId = consumerId;
+	}
 
 	public int getPendingMsgCount(){
 		return this.pendingMsgCount;
@@ -31,20 +55,28 @@ public class Topic {
 		this.pendingMsgSize = pendingMsgSize;
 	}
 
-	public int getInTotalMsg(){
-		return this.inTotalMsg;
+	public int getSuscriberCount(){
+		return this.suscriberCount;
 	}
 	
-	public void setInTotalMsg(int inTotalMsg){
-		this.inTotalMsg = inTotalMsg;
+	public void setSuscriberCount(int suscriberCount){
+		this.suscriberCount = suscriberCount;
 	}
 
-	public int getOutTotalMsg(){
-		return this.outTotalMsg;
+	public int getInTotalMsgs(){
+		return this.inTotalMsgs;
 	}
 	
-	public void setOutTotalMsg(int outTotalMsg){
-		this.outTotalMsg = outTotalMsg;
+	public void setInTotalMsgs(int inTotalMsgs){
+		this.inTotalMsgs = inTotalMsgs;
+	}
+
+	public int getOutTotalMsgs(){
+		return this.outTotalMsgs;
+	}
+	
+	public void setOutTotalMsgs(int outTotalMsgs){
+		this.outTotalMsgs = outTotalMsgs;
 	}
 
 	public int getInMsgRate(){
@@ -61,38 +93,6 @@ public class Topic {
 	
 	public void setOutMsgRate(int outMsgRate){
 		this.outMsgRate = outMsgRate;
-	}
-
-	public int getConsumerId(){
-		return this.consumerId;
-	}
-	
-	public void setConsumerId(int consumerId){
-		this.consumerId = consumerId;
-	}
-
-	public int getProducerId(){
-		return this.producerId;
-	}
-	
-	public void setProducerId(int producerId){
-		this.producerId = producerId;
-	}
-
-	public int getSuscriberCount(){
-		return this.suscriberCount;
-	}
-	
-	public void setSuscriberCount(int suscriberCount){
-		this.suscriberCount = suscriberCount;
-	}
-	
-	public String getName(){
-		return this.name;
-	}
-	
-	public void set(String name){
-		this.name = name;
 	}
 
 }
