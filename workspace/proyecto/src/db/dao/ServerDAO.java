@@ -1,5 +1,5 @@
 package db.dao;
- 
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,15 +26,15 @@ public class ServerDAO
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
 			estatuto.executeUpdate("INSERT INTO server VALUES ('" + server.getUrl() + "', '"
-			+ server.getConnectionCount() + "', '"+ server.getConsumerCount() + "', '"
+			+ server.getConnectionCount() + "', '" + server.getConsumerCount() + "', '"
 			+ server.getDiskReadRate() + "', '" + server.getDiskWriteRate() + "', '"
-			+ server.getInboundBytesRate() + server.getInboundMsgCount() + "', '"
+			+ server.getInboundBytesRate() + "', '" + server.getInboundMsgCount() + "', '"
 			+ server.getInboundMsgRate() + "', '" + server.getMsgMem() + "', '"
 			+ server.getOutboundMsgCount() + "', '" + server.getOutboundMsgRate() + "', '"
 			+ server.getPendingMsgCount() + "', '" + server.getPendingMsgSize() + "', '"
 			+ server.getProducerCount() + "', '" + server.getQueueCount() + "', '"
 			+ server.getSessionCount() + "', '" + server.getTopicCount() + "', '"
-			+ server.getUpTime() + "', '" + "', '" + "')");
+			+ server.getUpTime() + "')");
 		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();

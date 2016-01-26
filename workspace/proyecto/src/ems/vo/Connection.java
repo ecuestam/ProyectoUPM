@@ -3,14 +3,14 @@ package ems.vo;
 public class Connection {
 	
 	private int id;
+	private String type;
+	private String host;
+	private String address;
 	private int consumerCount;
 	private int producerCount;
 	private int sessionCount;
 	private long startTime;
 	private long upTime;
-	private String type;
-	private String host;
-	private String address;
 	private String username;
 
 	public Connection(){}
@@ -22,6 +22,32 @@ public class Connection {
 	
 	public void setId(int id){
 		this.id = id;
+	}
+
+	public String getType(){
+		return this.type;
+	}
+	
+	public void setType(String type){
+		this.type = type;
+	}
+
+
+	public String getHost(){
+		return this.host;
+	}
+	
+	public void setHost(String host){
+		this.host = host;
+	}
+
+
+	public String getAddress(){
+		return this.address;
+	}
+	
+	public void setAddress(String address){
+		this.address = address;
 	}
 
 	public int getConsumerCount(){
@@ -65,32 +91,6 @@ public class Connection {
 	
 	public void setUpTime(long upTime){
 		this.upTime = upTime;
-	}
-
-	public String getType(){
-		return this.type;
-	}
-	
-	public void setType(String type){
-		this.type = type;
-	}
-
-
-	public String getHost(){
-		return this.host;
-	}
-	
-	public void setHost(String host){
-		this.host = host;
-	}
-
-
-	public String getAddress(){
-		return this.address;
-	}
-	
-	public void setAddress(String address){
-		this.address = address;
 	}
 
 	public String getUsername(){
