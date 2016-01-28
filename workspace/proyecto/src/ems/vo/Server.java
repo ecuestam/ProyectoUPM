@@ -4,7 +4,7 @@ public class Server {
 	
 	private int connectionCount;
 	private int consumerCount;
-	private int diskReadRate;
+	private long diskReadRate;
 	private int diskWriteRate;
 	private int inboundBytesRate;
 	private int inboundMsgCount;
@@ -39,11 +39,11 @@ public class Server {
 		this.consumerCount = consumerCount;
 	}
 	
-	public int getDiskReadRate(){
+	public long getDiskReadRate(){
 		return this.diskReadRate;
 	}
 	
-	public void setDiskReadRate(int diskReadRate){
+	public void setDiskReadRate(long diskReadRate){
 		this.diskReadRate = diskReadRate;
 	}
 	
