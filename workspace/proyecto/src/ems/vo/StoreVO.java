@@ -1,17 +1,17 @@
 package ems.vo;
 
-public class Store {
+public class StoreVO {
 	
 	private String name;
 	private String fileName;
-	private int fileSize;
-	private int freeSpace;
-	private int usedSpace;
+	private long fileSize;
+	private long freeSpace;
+	private long usedSpace;
 	private int fragmentation;
-	private int msgSize;
-	private int msgCount;
+	private long msgSize;
+	private long msgCount;
 	
-	public Store(){}
+	public StoreVO(){}
 
 	public String getName(){
 		return this.name;
@@ -29,27 +29,27 @@ public class Store {
 		this.fileName = fileName;
 	}
 	
-	public int getFileSize(){
+	public long getFileSize(){
 		return this.fileSize;
 	}
 	
-	public void setFileSize(int fileSize){
+	public void setFileSize(long fileSize){
 		this.fileSize = fileSize;
 	}
 
-	public int getFreeSpace(){
+	public long getFreeSpace(){
 		return this.freeSpace;
 	}
 	
-	public void setFreeSpace(int freeSpace){
+	public void setFreeSpace(long freeSpace){
 		this.freeSpace = freeSpace;
 	}
 
-	public int getUsedSpace(){
+	public long getUsedSpace(){
 		return this.usedSpace;
 	}
 	
-	public void setUsedSpace(int usedSpace){
+	public void setUsedSpace(long usedSpace){
 		this.usedSpace = usedSpace;
 	}
 
@@ -61,19 +61,19 @@ public class Store {
 		this.fragmentation = fragmentation;
 	}
 
-	public int getMsgSize(){
+	public long getMsgSize(){
 		return this.msgSize;
 	}
 	
-	public void setMsgSize(int msgSize){
+	public void setMsgSize(long msgSize){
 		this.msgSize = msgSize;
 	}
 
-	public int getMsgCount(){
+	public long getMsgCount(){
 		return this.msgCount;
 	}
 	
-	public void setMsgCount(int msgCount){
+	public void setMsgCount(long msgCount){
 		this.msgCount = msgCount;
 	}
 	

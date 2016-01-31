@@ -1,27 +1,27 @@
 package ems.vo;
 
-public class Server {
+public class ServerVO {
 	
 	private int connectionCount;
 	private int consumerCount;
 	private long diskReadRate;
-	private int diskWriteRate;
-	private int inboundBytesRate;
-	private int inboundMsgCount;
-	private int inboundMsgRate;
-	private int outboundMsgCount;
-	private int outboundMsgRate;
-	private int pendingMsgCount;
-	private int pendingMsgSize;
+	private long diskWriteRate;
+	private long inboundBytesRate;
+	private long inboundMsgCount;
+	private long inboundMsgRate;
+	private long outboundMsgCount;
+	private long outboundMsgRate;
+	private long pendingMsgCount;
+	private long pendingMsgSize;
 	private int producerCount;
 	private int queueCount;
 	private int sessionCount;
 	private int topicCount;
-	private int upTime;
+	private long upTime;
 	private float msgMem;
 	private String url;
 	
-	public Server(){}
+	public ServerVO(){}
 	
 	public int getConnectionCount(){
 		return this.connectionCount;
@@ -47,67 +47,67 @@ public class Server {
 		this.diskReadRate = diskReadRate;
 	}
 	
-	public int getDiskWriteRate(){
+	public long getDiskWriteRate(){
 		return this.diskWriteRate;
 	}
 	
-	public void setDiskWriteRate(int diskWriteRate){
+	public void setDiskWriteRate(long diskWriteRate){
 		this.diskWriteRate = diskWriteRate;
 	}
 	
-	public int getInboundBytesRate(){
+	public long getInboundBytesRate(){
 		return this.inboundBytesRate;
 	}
 	
-	public void setInboundBytesRate(int inboundBytesRate){
+	public void setInboundBytesRate(long inboundBytesRate){
 		this.inboundBytesRate = inboundBytesRate;
 	}
 	
-	public int getInboundMsgCount(){
+	public long getInboundMsgCount(){
 		return this.inboundMsgCount;
 	}
 	
-	public void setInboundMsgCount(int inboundMsgCount){
+	public void setInboundMsgCount(long inboundMsgCount){
 		this.inboundMsgCount = inboundMsgCount;
 	}
 	
-	public int getInboundMsgRate(){
+	public long getInboundMsgRate(){
 		return this.inboundMsgRate;
 	}
 	
-	public void setInboundMsgRate(int inboundMsgRate){
+	public void setInboundMsgRate(long inboundMsgRate){
 		this.inboundMsgRate = inboundMsgRate;
 	}
 	
-	public int getOutboundMsgCount(){
+	public long getOutboundMsgCount(){
 		return this.outboundMsgCount;
 	}
 	
-	public void setOutboundMsgCount(int outboundMsgCount){
+	public void setOutboundMsgCount(long outboundMsgCount){
 		this.outboundMsgCount = outboundMsgCount;
 	}
 	
-	public int getOutboundMsgRate(){
+	public long getOutboundMsgRate(){
 		return this.outboundMsgRate;
 	}
 	
-	public void setOutboundMsgRate(int outboundMsgRate){
+	public void setOutboundMsgRate(long outboundMsgRate){
 		this.outboundMsgRate = outboundMsgRate;
 	}
 	
-	public int getPendingMsgCount(){
+	public long getPendingMsgCount(){
 		return this.pendingMsgCount;
 	}
 	
-	public void setPendingMsgCount(int pendingMsgCount){
+	public void setPendingMsgCount(long pendingMsgCount){
 		this.pendingMsgCount = pendingMsgCount;
 	}
 	
-	public int getPendingMsgSize(){
+	public long getPendingMsgSize(){
 		return this.pendingMsgSize;
 	}
 	
-	public void setPendingMsgSize(int pendingMsgSize){
+	public void setPendingMsgSize(long pendingMsgSize){
 		this.pendingMsgSize = pendingMsgSize;
 	}
 	
@@ -143,11 +143,11 @@ public class Server {
 		this.topicCount = topicCount;
 	}
 	
-	public int getUpTime(){
+	public long getUpTime(){
 		return this.upTime;
 	}
 	
-	public void setUpTime(int upTime){
+	public void setUpTime(long upTime){
 		this.upTime = upTime;
 	}
 	
@@ -163,7 +163,7 @@ public class Server {
 		return this.url;
 	}
 	
-	public void setUUrl(String url){
+	public void setUrl(String url){
 		this.url = url;
 	}
 

@@ -1,8 +1,8 @@
 package ems.vo;
 
-public class Connection {
+public class ConnectionVO {
 	
-	private int id;
+	private long id;
 	private String type;
 	private String host;
 	private String address;
@@ -13,14 +13,14 @@ public class Connection {
 	private long upTime;
 	private String username;
 
-	public Connection(){}
+	public ConnectionVO(){}
 	
 
-	public int getId(){
+	public long getId(){
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(long id){
 		this.id = id;
 	}
 

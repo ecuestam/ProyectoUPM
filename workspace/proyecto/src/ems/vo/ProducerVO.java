@@ -1,23 +1,23 @@
 package ems.vo;
 
-public class Producer {
+public class ProducerVO {
 	
-	private int id;
+	private long id;
 	private long createTime;
 	private String destinationName;
-	private String destinationType;
-	private int connectionId;
-	private int sessionId;
-	private int msgRate;
-	private int totalMsgs;
+	private int destinationType;
+	private long connectionId;
+	private long sessionId;
+	private long msgRate;
+	private long totalMsgs;
 	
-	public Producer(){}
+	public ProducerVO(){}
 	
-	public int getId(){
+	public long getId(){
 		return this.id;
 	}
 	
-	public void setId(int id){
+	public void setId(long id){
 		this.id = id;
 	}
 
@@ -37,43 +37,43 @@ public class Producer {
 		this.destinationName = destinationName;
 	}
 
-	public String getDestinationType(){
+	public int getDestinationType(){
 		return this.destinationType;
 	}
 	
-	public void setDestinationType(String destinationType){
+	public void setDestinationType(int destinationType){
 		this.destinationType = destinationType;
 	}
 
-	public int getConnectionId(){
+	public long getConnectionId(){
 		return this.connectionId;
 	}
 	
-	public void setConnectionId(int connectionId){
+	public void setConnectionId(long connectionId){
 		this.connectionId = connectionId;
 	}
 	
-	public int getSessionId(){
+	public long getSessionId(){
 		return this.sessionId;
 	}
 	
-	public void setSessionId(int sessionId){
+	public void setSessionId(long sessionId){
 		this.sessionId = sessionId;
 	}
 
-	public int getMsgRate(){
+	public long getMsgRate(){
 		return this.msgRate;
 	}
 	
-	public void setMsgRate(int msgRate){
+	public void setMsgRate(long msgRate){
 		this.msgRate = msgRate;
 	}
 
-	public int getTotalMsgs(){
+	public long getTotalMsgs(){
 		return this.totalMsgs;
 	}
 	
-	public void setTotalMsgs(int totalMsgs){
+	public void setTotalMsgs(long totalMsgs){
 		this.totalMsgs = totalMsgs;
 	}
 
