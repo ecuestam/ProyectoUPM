@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import db.connection.DbConnection;
-import ems.vo.Queue;
+import ems.vo.QueueVO;
 
 /**
  * Clase que permite el acceso a la base de datos
@@ -19,13 +19,15 @@ public class QueueDAO {
 	 * Añade la información de un servidor a la BBDD
 	 * @param queue
 	 */
-	public void addQueueInfo(ems.vo.Queue queue)
+	public void addQueueInfo(ems.vo.QueueVO queue)
 	{
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
-			estatuto.executeUpdate("INSERT INTO queues VALUES ('" + queue.getName() + "', '"
-			+ queue.getProducerId() + "', '" + queue.getConsumerId() + "', '"
+			estatuto.executeUpdate("INSERT INTO queues (name, producer_id, consumer_id,"
+			+ " pending_msg_count, pending_msg_size, in_total_msgs, out_total_msgs,"
+			+ " in_msg_rate, out_msg_rate) VALUES ('" + queue.getName() + "', '"
+//			+ queue.getProducerId() + "', '" + queue.getConsumerId() + "', '"	CONSEGUIR O ELIMINAR DE LA BBDD
 			+ queue.getPendingMsgCount() + "', '" + queue.getPendingMsgSize() + "', '"
 			+ queue.getInTotalMsgs() + "', '" + queue.getOutTotalMsgs() + "', '"
 			+ queue.getInMsgRate() + "', '" + queue.getOutMsgRate() + "')");

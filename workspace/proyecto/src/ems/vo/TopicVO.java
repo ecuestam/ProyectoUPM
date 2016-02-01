@@ -5,7 +5,7 @@ public class TopicVO {
 	private String name;
 	private long pendingMsgCount;
 	private long pendingMsgSize;
-	private int suscribersCount;
+	private int subscriberCount;
 	private int consumersCount;
 	private long inTotalMsgs;
 	private long outTotalMsgs;
@@ -38,12 +38,12 @@ public class TopicVO {
 		this.pendingMsgSize = pendingMsgSize;
 	}
 
-	public int getSuscribersCount(){
-		return this.suscribersCount;
+	public int getSubscriberCount(){
+		return this.subscriberCount;
 	}
 	
-	public void setSuscribersCount(int suscribersCount){
-		this.suscribersCount = suscribersCount;
+	public void setSubscriberCount(int subscriberCount){
+		this.subscriberCount = subscriberCount;
 	}
 		
 	public int getConsumersCount(){

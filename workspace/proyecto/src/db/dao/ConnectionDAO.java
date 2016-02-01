@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import db.connection.DbConnection;
-import ems.vo.Connection;
+import ems.vo.ConnectionVO;
 
 /**
  * Clase que permite el acceso a la base de datos
@@ -19,13 +19,15 @@ public class ConnectionDAO {
 	 * Añade la información de un servidor a la BBDD
 	 * @param connection
 	 */
-	public void addConnectionInfo(ems.vo.Connection connection)
+	public void addConnectionInfo(ems.vo.ConnectionVO connection)
 	{
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
-			estatuto.executeUpdate("INSERT INTO connections VALUES ('" + connection.getId() + "', '"
-			+ connection.getType() + "', '"+ connection.getHost() + "', '" + connection.getAddress() + "', '"
+			estatuto.executeUpdate("INSERT INTO connections (id, type, host, address,"
+			+ " consumer_count, producer_count, session_count, start_time, uptime, username)"
+			+ " VALUES ('" + connection.getId() + "', '" + connection.getType() + "', '"
+			+ connection.getHost() + "', '" + connection.getAddress() + "', '"
 			+ connection.getConsumerCount() + "', '" + connection.getProducerCount() + "', '"
 			+ connection.getSessionCount() + "', '" + connection.getStartTime() + "', '"
 			+ connection.getUpTime() + "', '" + connection.getUsername() + "')");

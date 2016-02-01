@@ -148,7 +148,7 @@ public class DataCollect {
 			objectTopic.setOutTotalMsgs(topic.getOutboundStatistics().getTotalMessages());
 			objectTopic.setPendingMsgCount(topic.getPendingMessageCount());
 			objectTopic.setPendingMsgSize(topic.getPendingMessageSize());
-			objectTopic.setSuscribersCount(topic.getSubscriberCount());
+			objectTopic.setSubscriberCount(topic.getSubscriberCount());
 			objectTopic.setConsumersCount(topic.getConsumerCount());
 			topicsList.add(objectTopic);
 		}
