@@ -1,7 +1,11 @@
 package ems.connection;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 
 import com.tibco.tibjms.admin.ConnectionInfo;
 import com.tibco.tibjms.admin.ConsumerInfo;
@@ -12,6 +16,9 @@ import com.tibco.tibjms.admin.StoreInfo;
 import com.tibco.tibjms.admin.TibjmsAdmin;
 import com.tibco.tibjms.admin.TibjmsAdminException;
 import com.tibco.tibjms.admin.TopicInfo;
+import ems.vo.*;
+import db.dao.*;
+
 
 
 public class conexionEMS 
@@ -29,7 +36,7 @@ public class conexionEMS
      *----------------------------------------------------------------------*/
 	TibjmsAdmin		connection	= null;
 	
-	public conexionEMS(String[] args) 
+	public conexionEMS(String[] args) throws InterruptedException 
 	{
 		
 		parseArgs(args);
@@ -110,13 +117,84 @@ public class conexionEMS
     /*-----------------------------------------------------------------------
      * run
      *----------------------------------------------------------------------*/
-	void run()
-		throws TibjmsAdminException
+	void run() throws TibjmsAdminException, InterruptedException	
 	{
-		connection = new TibjmsAdmin(serverUrl, userName, password);
-		ServerInfo infoServer = connection.getInfo();
+        
+        TibjmsAdmin connection = new TibjmsAdmin(serverUrl, userName, password);
+		
+		while (true) {
+		
+			ServerVO infoEMS = new ServerVO();
+			ServerInfo infoServer = connection.getInfo();
+			DataCollect collector = new DataCollect();
+			infoEMS = collector.getDataServer(infoServer);
+			
+			ArrayList<ConnectionVO> connectionsList = new ArrayList<ConnectionVO>();
+			ConnectionInfo[] connections = connection.getConnections();
+			connectionsList = collector.getDataConnections(connections);
+			
+			ArrayList<ConsumerVO> consumersList = new ArrayList<ConsumerVO>();
+			ConsumerInfo[] consumers = connection.getConsumers();
+			consumersList = collector.getDataConsumers(consumers);
+			
+			ArrayList<ProducerVO> producersList = new ArrayList<ProducerVO>();
+			ProducerInfo[] producers = connection.getProducersStatistics();
+			producersList = collector.getDataProducers(producers);
+			
+			ArrayList<QueueVO> queuesList = new ArrayList<QueueVO>();
+			QueueInfo[] queues = connection.getQueues();
+			queuesList = collector.getDataQueues(queues);
+			
+			ArrayList<TopicVO> topicsList = new ArrayList<TopicVO>();
+			TopicInfo[] topics = connection.getTopics();
+			topicsList = collector.getDataTopics(topics);
+			
+			ArrayList<StoreVO> storesList = new ArrayList<StoreVO>();
+			String[] storesName = connection.getStores();
+			storesList = collector.getDataStores(storesName);
+			
+			ServerDAO serverDB = new ServerDAO();
+			serverDB.addServerInfo(infoEMS);
+			
+			ConnectionDAO connectionDB = new ConnectionDAO();
+			for (ConnectionVO conn : connectionsList) {
+				connectionDB.addConnectionInfo(conn);
+			}
+			
+			ConsumerDAO consumerDB = new ConsumerDAO();
+			for (ConsumerVO consum : consumersList) {
+				consumerDB.addConsumerInfo(consum);
+			}
+			
+			ProducerDAO producerDB = new ProducerDAO();
+			for (ProducerVO produc : producersList) {
+				producerDB.addProducerInfo(produc);
+			}
+			
+			QueueDAO queueDB = new QueueDAO();
+			for (QueueVO queue :  queuesList) {
+				queueDB.addQueueInfo(queue);
+			}
+			
+			TopicDAO topicDB = new TopicDAO();
+			for (TopicVO topic : topicsList) {
+				topicDB.addTopicInfo(topic);
+			}
+			
+			StoreDAO storeDB = new StoreDAO();
+			for (StoreVO store : storesList) {
+				storeDB.addStoreInfo(store);
+			}
+			
+			Thread.sleep(5000);
+			
+		}
+		
+		
+		
+		
 		//System.out.println(infoServer.);
-		System.out.println(infoServer.toString());
+		/*System.out.println(infoServer.toString());
 		System.out.println ("Conexiones: " + String.valueOf(infoServer.getConnectionCount()));
 		//System.out.println(info);
 		String info = infoServer.toString();
@@ -133,10 +211,10 @@ public class conexionEMS
 		{
 			QueueInfo infoQueue = connection.get
 		}*/
-		QueueInfo[] queues = connection.getQueues();
+		/*QueueInfo[] queues = connection.getQueues();
 		for (QueueInfo queue : queues)
 		{
-			System.out.println("Mensajes pendites de la cola " + queue.getName() + ": " + queue.getPendingMessageCount());
+			System.out.println("Mensajes pendientes de la cola " + queue.getName() + ": " + queue.getPendingMessageCount());
 			System.out.println("Consumidores de la cola " + queue.getName() + ": " + queue.getConsumerCount());
 		}
 		TopicInfo[] topics = connection.getTopics();
@@ -178,11 +256,11 @@ public class conexionEMS
 	
 		long diskFree = new File("/").getFreeSpace();
 		System.out.println("Espacio libre FS: " + diskFree);
-		
+		*/
 		
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws InterruptedException
 	{
 		conexionEMS t = new conexionEMS(args);
 	}
