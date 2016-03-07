@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class DbConnection {
 	//Parametros de conexion
-	static String db = "prueba";
+	static String db = "ems_db";
 	static String login = "mysql";
 	static String password = "proyecto";
 	static String url = "jdbc:mysql://192.168.1.12/"+db;
@@ -19,13 +19,13 @@ public class DbConnection {
 	//Constructor de DbConnection
 	public DbConnection() {
 		try{
-			//Obtenemos el driver de para mysql
+			//Obtenemos el driver para mysql
 			Class.forName("com.mysql.jdbc.Driver");
 			//Obtenemos la conexión
-			connection = DriverManager.getConnection(url,login,password);
+			connection = DriverManager.getConnection(url, login, password);
 	 
 			if (connection!=null){
-				System.out.println("Conexión a base de datos "+db+" OK\n");
+				System.out.println("Conexión a base de datos " + db + " OK\n");
 			}
 	}
 	catch(SQLException e){
@@ -43,6 +43,11 @@ public class DbConnection {
 	}
 	 
 	public void desconectar(){
-		connection = null;
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
