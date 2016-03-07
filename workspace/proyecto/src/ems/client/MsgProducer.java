@@ -15,8 +15,8 @@ package ems.client;
  *   -password  <password>
  *   -topic     <nombre-topic>
  *   -queue     <nombre-cola>
- *   -numRepeat	<numero-repeticiones-mensajes>
- *   -timeSleep <tiempo-entre-repetiones-en-segundos>
+ *   -repeat	<numero-repeticiones-mensajes>
+ *   -time <tiempo-entre-repetiones-en-segundos>
  *
  */
 
@@ -33,8 +33,8 @@ public class MsgProducer
     String          userName     = null;
     String          password     = null;
     String          name         = null;
-    int				timeSleep	 = 0;
-    int				numRepeat	 = 0;
+    int				time	 = 0;
+    int				repeat	 = 0;
     Vector<String>  data         = new Vector<String>();
     boolean         useTopic     = true;
 
@@ -93,7 +93,7 @@ public class MsgProducer
             msgProducer = session.createProducer(null);
 
             /* publish messages */
-            for (cont = 0; cont<numRepeat; cont++){
+            for (cont = 0; cont<repeat; cont++){
             	for (i = 0; i<data.size(); i++){
 	                /* create text message */
 	                msg = session.createTextMessage();
@@ -106,9 +106,9 @@ public class MsgProducer
 	
 	                System.err.println("Published message: "+data.elementAt(i));
 	            }
-            	if ((cont < numRepeat) && (timeSleep > 0)){
+            	if ((cont < repeat) && (time > 0)){
             		try{
-            			Thread.sleep(timeSleep * 1000);
+            			Thread.sleep(time * 1000);
             		} catch (InterruptedException ie) {
             			System.exit(-1);
             		}
@@ -141,8 +141,8 @@ public class MsgProducer
         System.err.println("   -password   <password>");
         System.err.println("   -topic      <nombre-topic>");
         System.err.println("   -queue      <nombre-cola>");
-        System.err.println("   -numRepeat  [<numero-repeticiones-mensajes>]");
-        System.err.println("   -timeSleep  [<tiempo-entre-repetiones-en-segundos>]");
+        System.err.println("   -repeat  [<numero-repeticiones-mensajes>]");
+        System.err.println("   -time  [<tiempo-entre-repetiones-en-segundos>]");
         System.exit(0);
     }
 
@@ -191,17 +191,17 @@ public class MsgProducer
                 i += 2;
             }
             else
-            if (args[i].compareTo("-timeSleep")==0)
+            if (args[i].compareTo("-time")==0)
             {
                 if ((i+1) >= args.length) usage();
-                timeSleep = Integer.parseInt(args[i+1]);
+                time = Integer.parseInt(args[i+1]);
                 i += 2;
             }
             else
-            if (args[i].compareTo("-numRepeat")==0)
+            if (args[i].compareTo("-repeat")==0)
             {
                 if ((i+1) >= args.length) usage();
-                numRepeat = Integer.parseInt(args[i+1]);
+                repeat = Integer.parseInt(args[i+1]);
                 i += 2;
             }
             else
