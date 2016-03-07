@@ -151,15 +151,10 @@ public class conexionEMS
 			
 			ArrayList<StoreVO> storesList = new ArrayList<StoreVO>();
 			String[] storesName = connection.getStores();
-			storesList = collector.getDataStores(storesName);
+			storesList = collector.getDataStores(storesName, connection);
 			
 			ServerDAO serverDB = new ServerDAO();
 			serverDB.addServerInfo(infoEMS);
-			
-			ConnectionDAO connectionDB = new ConnectionDAO();
-			for (ConnectionVO conn : connectionsList) {
-				connectionDB.addConnectionInfo(conn);
-			}
 			
 			ConsumerDAO consumerDB = new ConsumerDAO();
 			for (ConsumerVO consum : consumersList) {
@@ -169,6 +164,11 @@ public class conexionEMS
 			ProducerDAO producerDB = new ProducerDAO();
 			for (ProducerVO produc : producersList) {
 				producerDB.addProducerInfo(produc);
+			}
+			
+			ConnectionDAO connectionDB = new ConnectionDAO();
+			for (ConnectionVO conn : connectionsList) {
+				connectionDB.addConnectionInfo(conn);
 			}
 			
 			QueueDAO queueDB = new QueueDAO();
@@ -189,79 +189,10 @@ public class conexionEMS
 			Thread.sleep(5000);
 			
 		}
-		
-		
-		
-		
-		//System.out.println(infoServer.);
-		/*System.out.println(infoServer.toString());
-		System.out.println ("Conexiones: " + String.valueOf(infoServer.getConnectionCount()));
-		//System.out.println(info);
-		String info = infoServer.toString();
-		System.out.println ("Start time: " + infoServer.getStartTime());
-		System.out.println("Uptime: " + infoServer.getUpTime());
-		StringTokenizer token = new StringTokenizer(info, ";");
-		while (token.hasMoreTokens())
-		{
-			System.out.println(token.nextToken());
-		}
-/*		int numQueues = infoServer.getQueueCount();
-		int contador;
-		for (contador=0; contador<numQueues; contador++)
-		{
-			QueueInfo infoQueue = connection.get
-		}*/
-		/*QueueInfo[] queues = connection.getQueues();
-		for (QueueInfo queue : queues)
-		{
-			System.out.println("Mensajes pendientes de la cola " + queue.getName() + ": " + queue.getPendingMessageCount());
-			System.out.println("Consumidores de la cola " + queue.getName() + ": " + queue.getConsumerCount());
-		}
-		TopicInfo[] topics = connection.getTopics();
-		for (TopicInfo topic : topics)
-		{
-			//System.out.println(topic.toString());
-			System.out.println("Mensajes pendientes del topic " + topic.getName() + ": " + topic.getPendingMessageCount());
-		}
-		ConnectionInfo[] connections = connection.getConnections();
-		for (ConnectionInfo conn : connections)
-		{
-			System.out.println();
-			System.out.println(conn.toString());
-		}
-		ConsumerInfo[] consumers = connection.getConsumers();
-		for (ConsumerInfo consumer : consumers)
-		{
-			System.out.println();
-			System.out.println(consumer.toString());
-		}
-		ProducerInfo[] producers = connection.getProducersStatistics();
-		for (ProducerInfo producer : producers)
-		{
-			System.out.println();
-			System.out.println(producer.toString());
-		}
-		String[] stores = connection.getStores();
-		for (String store : stores)
-		{
-			System.out.println();
-			System.out.println(store);
-			StoreInfo infoStore = connection.getStoreInfo(store);
-			System.out.println(infoStore.toString());
-			//infoStore.ge
-		}
-		
-		long diskSize = new File("/").getTotalSpace();
-		System.out.println("Espacio FS: " + diskSize);
-	
-		long diskFree = new File("/").getFreeSpace();
-		System.out.println("Espacio libre FS: " + diskFree);
-		*/
-		
 	}
 	
 	public static void main(String[] args) throws InterruptedException
 	{
-		conexionEMS t = new conexionEMS(args);
+		new conexionEMS(args);
 	}
 }
