@@ -24,10 +24,9 @@ public class TopicDAO {
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
-			estatuto.executeUpdate("INSERT INTO topics (name, producer_id, consumer_id,"
-			+ " pending_msg_count, pending_msg_size, subscriber_count, in_total_msgs, out_total_msgs,"
-			+ " in_msg_rate, out_msg_rate) VALUES ('" + topic.getName() + "', '"
-//			+ topic.getProducerId() + "', '" + topic.getConsumerId() + "', '"	CONSEGUIR O ELIMINAR DE LA BBDD
+			estatuto.executeUpdate("INSERT INTO topics (name, "
+			+ "pending_msg_count, pending_msg_size, subscriber_count, in_total_msgs, out_total_msgs, "
+			+ "in_msg_rate, out_msg_rate) VALUES ('" + topic.getName() + "', '"
 			+ topic.getPendingMsgCount() + "', '" + topic.getPendingMsgSize() + "', '"
 			+ topic.getSubscriberCount() + "', '" + topic.getInTotalMsgs() + "', '"
 			+ topic.getOutTotalMsgs() + "', '" + topic.getInMsgRate() + "', '"
