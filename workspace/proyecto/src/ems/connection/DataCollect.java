@@ -2,6 +2,8 @@ package ems.connection;
 
 import java.util.ArrayList;
 
+import javax.management.openmbean.CompositeData;
+
 import com.tibco.tibjms.admin.ConnectionInfo;
 import com.tibco.tibjms.admin.ConsumerInfo;
 import com.tibco.tibjms.admin.FileStoreInfo;
@@ -90,8 +92,8 @@ public class DataCollect {
 			objectConsumer.setDestinationType(consumer.getDestinationType());
 			objectConsumer.setId(consumer.getID());
 			objectConsumer.setSessionId(consumer.getSessionID());
-			objectConsumer.setMsgRate(consumer.getStatistics().getMessageRate());
-			objectConsumer.setTotalMsgs(consumer.getStatistics().getTotalMessages());
+//			objectConsumer.setMsgRate(consumer.getStatistics().getMessageRate());
+//			objectConsumer.setTotalMsgs(consumer.getStatistics().getTotalMessages());
 			consumersList.add(objectConsumer);
 		}
 		return consumersList;
@@ -156,11 +158,11 @@ public class DataCollect {
 		
 	}
 
-	public ArrayList<StoreVO> getDataStores (String[] storesName) throws TibjmsAdminException {
+	public ArrayList<StoreVO> getDataStores (String[] storesName, TibjmsAdmin connection) throws TibjmsAdminException {
 		// Creamos una Lista de objetos StoreVO y añadimos todos los datos de cada store
 		ArrayList<StoreVO> storesList = new ArrayList<StoreVO>();
-		TibjmsAdmin	connection	= null;
-		FileStoreInfo infoFile = null;
+		//TibjmsAdmin connection = new TibjmsAdmin("tcp://192.168.1.11", "admin", "proyecto");
+		//FileStoreInfo infoFile = null;
 		//String[] storesName = connection.getStores();
 		for (String storeName : storesName) {
 			StoreInfo store = connection.getStoreInfo(storeName);
