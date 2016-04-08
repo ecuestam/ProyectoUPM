@@ -1,5 +1,12 @@
 package ems.connection;
 
+/*
+ * En esta clase creamos tantas listas de objetos VO (value object) como elementos queremos
+ * monitorizar (a excepción del servidor de datos, que se constituye de un solo elemento VO
+ * debido a que a que este elemento no ve afectados sus datos en el tiempo) y las rellenamos
+ * con los datos que nos parecen pertinentes de ser mostrados posteriormente.
+ */
+
 import java.util.ArrayList;
 
 import javax.management.openmbean.CompositeData;
