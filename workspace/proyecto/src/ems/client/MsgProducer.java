@@ -1,24 +1,20 @@
 package ems.client;
 
-/*
- * Esta clase publica mensajes en un destino determinado
+/*----------------------------------------------------------------------------------
+ * Esta clase publica mensajes en un destino determinado, ya sea una cola o un
+ * topic
  *
- * Uso:  java MsgProducer  [opciones]
- *                       <mensaje-text1>
- *                       ...
- *                       <mensaje-textN>
+ * Uso:  java MsgProducer [opciones]
  *
- * las opciones son:
+ *    donde las opciones son:
  *
- *   -server    <url-servidor>
- *   -user      <nombre-usuario>
+ *   -server    <URL servidor>
+ *   -user      <usuario>
  *   -password  <password>
- *   -topic     <nombre-topic>
- *   -queue     <nombre-cola>
- *   -repeat	<numero-repeticiones-mensajes>
- *   -time <tiempo-entre-repetiones-en-segundos>
+ *   -topic     <nombre topic>
+ *   -queue     <nombre cola>
  *
- */
+ *---------------------------------------------------------------------------------*/
 
 import java.util.*;
 
@@ -27,14 +23,14 @@ import javax.jms.*;
 public class MsgProducer
 {
     /*-----------------------------------------------------------------------
-     * Parametros
+     * Argumentos
      *----------------------------------------------------------------------*/
     String          serverUrl    = null;
     String          userName     = null;
     String          password     = null;
     String          name         = null;
-    int				time	 = 0;
-    int				repeat	 = 0;
+    int				time         = 0;
+    int				repeat       = 0;
     Vector<String>  data         = new Vector<String>();
     boolean         useTopic     = true;
 
@@ -48,106 +44,64 @@ public class MsgProducer
 
     public MsgProducer(String[] args)
     {
-        parseArgs(args);
-
-        /* print parameters */
-        System.err.println("\n------------------------------------------------------------------------");
-        System.err.println("Servidor........................ "+((serverUrl != null)?serverUrl:"localhost"));
-        System.err.println("Usuario......................... "+((userName != null)?userName:"(null)"));
-        System.err.println("Destino.................. "+name);
-        System.err.println("Mensaje.................. ");
-        for(int i=0;i<data.size();i++)
-        {
-            System.err.println(data.elementAt(i));
-        }
-        System.err.println("------------------------------------------------------------------------\n");
-
-        try 
-        {
-            TextMessage msg;
-            int         i;
-            int			cont;
-
-            if (data.size() == 0)
-            {
-                System.err.println("***Error: debe especificar al menos un mensaje de texto\n");
-                usage();
-            }
-
-            System.err.println("Publicando al destino '"+name+"'\n");
-
-            ConnectionFactory factory = new com.tibco.tibjms.TibjmsConnectionFactory(serverUrl);
-
-            connection = factory.createConnection(userName,password);
-
-            /* create the session */
-            session = connection.createSession(false,javax.jms.Session.AUTO_ACKNOWLEDGE);
-
-            /* create the destination */
-            if(useTopic)
-                destination = session.createTopic(name);
-            else
-                destination = session.createQueue(name);
-
-            /* create the producer */
-            msgProducer = session.createProducer(null);
-
-            /* publish messages */
-            for (cont = 0; cont<repeat; cont++){
-            	for (i = 0; i<data.size(); i++){
-	                /* create text message */
-	                msg = session.createTextMessage();
+    	
+		if (args.length < 13) 
+		{
+			usage();
+		} else
+		{
+	        parseArgs(args);
 	
-	                /* set message text */
-	                msg.setText((String)data.elementAt(i));
+		    /*-----------------------------------------------------------------------
+		     * Sacar por pantalla los argumentos 
+		     *----------------------------------------------------------------------*/
+	        System.err.println("\n--------------------------------------------------------------------------");
+	        System.err.println("Cliente de EMS consumidor de mensajes");
+	        System.err.println("--------------------------------------------------------------------------");
+	        System.err.println("Servidor........................... "+this.serverUrl);
+	        System.err.println("User............................... "+this.userName);
+	        System.err.println("Destination........................ "+this.name);
+	        System.err.println("Numero de repeticiones............. "+this.repeat);
+	        System.err.println("Tiempo entre repeticiones.......... "+this.time+" segundos");
+	        System.err.println("Mensajes........................... ");
+	        for(int i=0;i<data.size();i++)
+	        {
+	            System.err.println(data.elementAt(i));
+	        }
+	        System.err.println("--------------------------------------------------------------------------\n");
 	
-	                /* publish message */
-	                msgProducer.send(destination, msg);
-	
-	                System.err.println("Published message: "+data.elementAt(i));
-	            }
-            	if ((cont < repeat) && (time > 0)){
-            		try{
-            			Thread.sleep(time * 1000);
-            		} catch (InterruptedException ie) {
-            			System.exit(-1);
-            		}
-            	}
-            }
-
-            /* close the connection */
-            connection.close();
-        } 
-        catch (JMSException e) 
-        {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+	        try {
+	            run();
+	        } catch (JMSException e) {
+	            e.printStackTrace();
+	        }
+		}
     }
 
     /*-----------------------------------------------------------------------
-    * usage
-    *----------------------------------------------------------------------*/
+     * Ayuda sobre los parámetros para lanzar el productor que conecta al
+     * servidor EMS para enviar los mensajes a una cola/topic
+     *----------------------------------------------------------------------*/
     private void usage()
     {
-        System.err.println("\nUso: java MsgProducer [options]");
-        System.err.println("                        <message-text-1>");
-        System.err.println("                        [<message-text-2>] ...");
-        System.err.println("\n");
-        System.err.println("   las opciones son:");
+        System.err.println("\nUso: java -jar MsgProducer [opciones]");
+        System.err.println("                        <mensaje de texto 1>");
+        System.err.println("                       [<mensaje de texto 2>] ...");
         System.err.println("");
-        System.err.println("   -server     <url-servidor>");
-        System.err.println("   -user       <nombre-usuario>");
-        System.err.println("   -password   <password>");
-        System.err.println("   -topic      <nombre-topic>");
-        System.err.println("   -queue      <nombre-cola>");
-        System.err.println("   -repeat  [<numero-repeticiones-mensajes>]");
-        System.err.println("   -time  [<tiempo-entre-repetiones-en-segundos>]");
+        System.err.println(" las opciones son:");
+        System.err.println("");
+        System.err.println("   -server     <URL servidor>        - URL del servidor EMS");
+        System.err.println("   -user       <usuario>             - nombre de usuario");
+        System.err.println("   -password   <password>            - password de usuario");
+        System.err.println("   -topic      <nombre topic>        - nombre del topic");
+        System.err.println("   -queue      <nombre cola>         - nombre de la cola");
+        System.err.println("   -repeat     <num repeticiones>    - numero de repeticiones de envio de mensajes");
+        System.err.println("   -time       <segundos>            - tiempo entre envios de mensajes");
         System.exit(0);
     }
 
     /*-----------------------------------------------------------------------
-     * parseo de Argumentos
+     * Parseo de los Argumentos introducidos
      *----------------------------------------------------------------------*/
     void parseArgs(String[] args)
     {
@@ -157,21 +111,18 @@ public class MsgProducer
         {
             if (args[i].compareTo("-server")==0)
             {
-                if ((i+1) >= args.length) usage();
                 serverUrl = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-topic")==0)
             {
-                if ((i+1) >= args.length) usage();
                 name = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-queue")==0)
             {
-                if ((i+1) >= args.length) usage();
                 name = args[i+1];
                 i += 2;
                 useTopic = false;
@@ -179,35 +130,26 @@ public class MsgProducer
             else
             if (args[i].compareTo("-user")==0)
             {
-                if ((i+1) >= args.length) usage();
                 userName = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-password")==0)
             {
-                if ((i+1) >= args.length) usage();
                 password = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-time")==0)
             {
-                if ((i+1) >= args.length) usage();
                 time = Integer.parseInt(args[i+1]);
                 i += 2;
             }
             else
             if (args[i].compareTo("-repeat")==0)
             {
-                if ((i+1) >= args.length) usage();
                 repeat = Integer.parseInt(args[i+1]);
                 i += 2;
-            }
-            else
-            if (args[i].compareTo("-help")==0)
-            {
-                usage();
             }
             else
             {
@@ -216,9 +158,79 @@ public class MsgProducer
             }
         }
     }
+    
+    /*-----------------------------------------------------------------------
+     * Método donde se crea la conexión con el servidor EMS y se
+     * conecta un productor a un destino, ya sea una cola o un topic,
+     * para publicar mensajes
+     *----------------------------------------------------------------------*/
+    void run()
+    	throws JMSException
+    {
+
+        TextMessage msg;
+        int         i;
+        int			cont;
+
+        if (data.size() == 0)
+        {
+            System.err.println("***Error: debe especificar al menos un mensaje de texto\n");
+            usage();
+        }
+
+        System.err.println("Publicando al destino '"+name+"'\n");
+
+        ConnectionFactory factory = new com.tibco.tibjms.TibjmsConnectionFactory(serverUrl);
+        
+        /* crear la conexión */
+        connection = factory.createConnection(userName,password);
+
+        /* crear la sesión */
+        session = connection.createSession(false,javax.jms.Session.AUTO_ACKNOWLEDGE);
+
+        /* crear el destino (cola o topic) */
+        if(useTopic)
+            destination = session.createTopic(name);
+        else
+            destination = session.createQueue(name);
+
+        /* crear el productor */
+        msgProducer = session.createProducer(null);
+
+        /* publicar mensajes */
+        for (cont = 0; cont<repeat; cont++)
+        {
+        	for (i = 0; i<data.size(); i++)
+        	{
+                /* generar mensaje de texto */
+                msg = session.createTextMessage();
+
+                /* añadir mensaje de texto */
+                msg.setText((String)data.elementAt(i));
+
+                /* publicar mensaje */
+                msgProducer.send(destination, msg);
+
+                System.err.println("Published message: "+data.elementAt(i));
+            }
+        	/* esperar tiempo establecido entre el envío de mensajes */
+        	if ((cont < repeat) && (time > 0)){
+        		try
+        		{
+        			Thread.sleep(time * 1000);
+        		} catch (InterruptedException ie) 
+        		{
+        			System.exit(-1);
+        		}
+        	}
+        }
+
+        /* cerrar la conexión */
+        connection.close();
+    }
 
     /*-----------------------------------------------------------------------
-     * Metodo principal
+     * Método principal
      *----------------------------------------------------------------------*/
     public static void main(String[] args)
     {

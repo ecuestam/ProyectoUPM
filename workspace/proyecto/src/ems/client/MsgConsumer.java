@@ -70,14 +70,13 @@ public class MsgConsumer
 		}
     }
 
-
     /*-----------------------------------------------------------------------
      * Ayuda sobre los parámetros para lanzar el cliente que conecta al
      * servidor EMS para consumir los mensajes de una cola/topic
      *----------------------------------------------------------------------*/
     void usage()
     {
-        System.err.println("\nUso: MsgConsumer [opciones]");
+        System.err.println("\nUso: java -jar MsgConsumer [opciones]");
         System.err.println("");
         System.err.println(" las opciones son:");
         System.err.println("");
@@ -147,8 +146,8 @@ public class MsgConsumer
     }
 
     /*-----------------------------------------------------------------------
-     * Función principal donde se crea la conexión con el servidor EMS
-     * y se conecta un consumidor a un destino, ya sea una cola o un topic,
+     * Método donde se crea la conexión con el servidor EMS y se
+     * conecta un consumidor a un destino, ya sea una cola o un topic,
      * para consumir sus mensajes
      *----------------------------------------------------------------------*/
      void run()
@@ -202,7 +201,7 @@ public class MsgConsumer
     }
 
     /*-----------------------------------------------------------------------
-     * main
+     * Método principal
      *----------------------------------------------------------------------*/
     public static void main(String[] args)
     {

@@ -69,7 +69,7 @@ public class MonitorEMS
      *----------------------------------------------------------------------*/
     void usage()
     {
-        System.err.println("\nUso: MonitorEMS [opciones]");
+        System.err.println("\nUso: java -jar MonitorEMS [opciones]");
         System.err.println("");
         System.err.println("   donde las opciones son:");
         System.err.println("");
@@ -213,6 +213,9 @@ public class MonitorEMS
 		}
 	}
 	
+    /*-----------------------------------------------------------------------
+     * main
+     *----------------------------------------------------------------------*/
 	public static void main(String[] args) throws InterruptedException
 	{
 		new MonitorEMS(args);
