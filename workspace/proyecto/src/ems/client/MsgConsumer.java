@@ -1,23 +1,20 @@
 package ems.client;
 
-/* 
- * Esta clase se suscribe a un destino y recibe sus mensajes
+/*----------------------------------------------------------------------------------
+ * Esta clase se suscribe a un destino, ya sea una cola o un topic y recibe sus
+ * mensajes
  *
  * Uso:  java MsgConsumer [opciones]
  *
- *    where options are:
+ *    donde las opciones son:
  *
- *   -server    <url-servidor>
- *   -user      <nombre-usuario>
+ *   -server    <URL servidor>
+ *   -user      <usuario>
  *   -password  <password>
- *   -topic     <nombre-topic>
- *   -queue     <nombre-cola>
- *   -ackmode   <modo-ack>. Por defecto es AUTO.
- *              Otros valores posbiles: DUPS_OK, CLIENT, EXPLICIT_CLIENT,
- *              EXPLICIT_CLIENT_DUPS_OK and NO.
+ *   -topic     <nombre topic>
+ *   -queue     <nombre cola>
  *
- *
- */
+ *---------------------------------------------------------------------------------*/
 
 import javax.jms.*;
 
@@ -27,7 +24,7 @@ public class MsgConsumer
        implements ExceptionListener
 {
     /*-----------------------------------------------------------------------
-     * Parametros
+     * Argumentos
      *----------------------------------------------------------------------*/
      String           serverUrl   = null;
      String           userName    = null;
@@ -46,27 +43,37 @@ public class MsgConsumer
 
     public MsgConsumer(String[] args)
     {
-        parseArgs(args);
-
-        /* print parameters */
-        System.err.println("\n------------------------------------------------------------------------");
-        System.err.println("tibjmsMsgConsumer SAMPLE");
-        System.err.println("------------------------------------------------------------------------");
-        System.err.println("Server....................... "+((serverUrl != null)?serverUrl:"localhost"));
-        System.err.println("User......................... "+((userName != null)?userName:"(null)"));
-        System.err.println("Destination.................. "+name);
-        System.err.println("------------------------------------------------------------------------\n");
-
-        try {
-            run();
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
+    	
+		if (args.length != 8) 
+		{
+			usage();
+		} else
+		{
+	        parseArgs(args);
+	
+		    /*-----------------------------------------------------------------------
+		     * Sacar por pantalla los argumentos 
+		     *----------------------------------------------------------------------*/
+	        System.err.println("\n--------------------------------------------------------------------------");
+	        System.err.println("Cliente de EMS consumidor de mensajes");
+	        System.err.println("--------------------------------------------------------------------------");
+	        System.err.println("Servidor........................... "+this.serverUrl);
+	        System.err.println("User............................... "+this.userName);
+	        System.err.println("Destination........................ "+this.name);
+	        System.err.println("--------------------------------------------------------------------------\n");
+	
+	        try {
+	            run();
+	        } catch (JMSException e) {
+	            e.printStackTrace();
+	        }
+		}
     }
 
 
     /*-----------------------------------------------------------------------
-     * Uso
+     * Ayuda sobre los parámetros para lanzar el cliente que conecta al
+     * servidor EMS para consumir los mensajes de una cola/topic
      *----------------------------------------------------------------------*/
     void usage()
     {
@@ -74,19 +81,16 @@ public class MsgConsumer
         System.err.println("");
         System.err.println(" las opciones son:");
         System.err.println("");
-        System.err.println("   -server   <server URL> - EMS server URL, default is local server");
-        System.err.println("   -user     <user name>  - user name, default is null");
-        System.err.println("   -password <password>   - password, default is null");
-        System.err.println("   -topic    <topic-name> - topic name, default is \"topic.sample\"");
-        System.err.println("   -queue    <queue-name> - queue name, no default");
-        System.err.println("   -ackmode  <ack-mode>   - acknowledge mode, por defecto es AUTO");
-        System.err.println("                            Otro modos posibles: CLIENT, DUPS_OK, NO,");
-        System.err.println("                            EXPLICIT_CLIENT and EXPLICIT_CLIENT_DUPS_OK");
+        System.err.println("   -server   <URL servidor>	- URL del servidor EMS");
+        System.err.println("   -user     <usuario>  	- nombre de usuario");
+        System.err.println("   -password <password>		- password de usuario");
+        System.err.println("   -topic    <nombre topic>	- nombre del topic");
+        System.err.println("   -queue    <nombre cola>	- nombre de la cola");
         System.exit(0);
     }
 
     /*-----------------------------------------------------------------------
-     * parseArgs
+     * Parseo de los Argumentos introducidos
      *----------------------------------------------------------------------*/
     void parseArgs(String[] args)
     {
@@ -96,70 +100,37 @@ public class MsgConsumer
         {
             if (args[i].compareTo("-server")==0)
             {
-                if ((i+1) >= args.length) usage();
-                serverUrl = args[i+1];
+                this.serverUrl = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-topic")==0)
             {
-                if ((i+1) >= args.length) usage();
-                name = args[i+1];
+                this.name = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-queue")==0)
             {
-                if ((i+1) >= args.length) usage();
-                name = args[i+1];
+                this.name = args[i+1];
                 i += 2;
                 useTopic = false;
             }
             else
             if (args[i].compareTo("-user")==0)
             {
-                if ((i+1) >= args.length) usage();
-                userName = args[i+1];
+                this.userName = args[i+1];
                 i += 2;
             }
             else
             if (args[i].compareTo("-password")==0)
             {
-                if ((i+1) >= args.length) usage();
-                password = args[i+1];
+                this.password = args[i+1];
                 i += 2;
             }
             else
-            if (args[i].compareTo("-ackmode")==0)
             {
-                if ((i+1) >= args.length) usage();
-                if (args[i+1].compareTo("AUTO")==0)
-                    ackMode = Session.AUTO_ACKNOWLEDGE;
-                else if (args[i+1].compareTo("CLIENT")==0)
-                    ackMode = Session.CLIENT_ACKNOWLEDGE;
-                else if (args[i+1].compareTo("DUPS_OK")==0)
-                    ackMode = Session.DUPS_OK_ACKNOWLEDGE;
-                else if (args[i+1].compareTo("EXPLICIT_CLIENT")==0)
-                    ackMode = Tibjms.EXPLICIT_CLIENT_ACKNOWLEDGE;
-                else if (args[i+1].compareTo("EXPLICIT_CLIENT_DUPS_OK")==0)
-                    ackMode = Tibjms.EXPLICIT_CLIENT_DUPS_OK_ACKNOWLEDGE;
-                else if (args[i+1].compareTo("NO")==0)
-                    ackMode = Tibjms.NO_ACKNOWLEDGE;
-                else
-                {
-                    System.err.println("Unrecognized -ackmode: "+args[i+1]);
-                    usage();
-                }
-                i += 2;
-            }
-            else
-            if (args[i].compareTo("-help")==0)
-            {
-                usage();
-            }
-            else
-            {
-                System.err.println("Unrecognized parameter: "+args[i]);
+                System.err.println("Parametro desconocido: "+args[i]);
                 usage();
             }
         }
@@ -167,53 +138,53 @@ public class MsgConsumer
 
 
     /*---------------------------------------------------------------------
-     * onException
+     * Control de los eventos de conexión
      *---------------------------------------------------------------------*/
-     public void onException(
-                      JMSException e)
+     public void onException(JMSException e)
     {
-        /* print the connection exception status */
+        /* Mostrar la excepción de la conexión */
         System.err.println("CONNECTION EXCEPTION: " + e.getMessage());
     }
 
     /*-----------------------------------------------------------------------
-     * run
+     * Función principal donde se crea la conexión con el servidor EMS
+     * y se conecta un consumidor a un destino, ya sea una cola o un topic,
+     * para consumir sus mensajes
      *----------------------------------------------------------------------*/
      void run()
           throws JMSException
      {
         Message       msg         = null;
-        String        msgType     = "UNKNOWN";
 
-        System.err.println("Subscribing to destination: "+name+"\n");
+        System.err.println("Suscripcion al destino: "+name+"\n");
 
         ConnectionFactory factory = new com.tibco.tibjms.TibjmsConnectionFactory(serverUrl);
 
-        /* create the connection */
+        /* crear la conexión */
         connection = factory.createConnection(userName,password);
 
-        /* create the session */
+        /* crear la sesión */
         session = connection.createSession(false,ackMode);
 
-        /* set the exception listener */
+        /* establecer el control de las excepciones */
         connection.setExceptionListener(this);
 
-        /* create the destination */
+        /* crear el destino (cola o topic) */
         if(useTopic)
             destination = session.createTopic(name);
         else
             destination = session.createQueue(name);
 
-        /* create the consumer */
+        /* crear el consumidor */
         msgConsumer = session.createConsumer(destination);
 
-        /* start the connection */
+        /* abrir la conexión */
         connection.start();
 
-        /* read messages */
+        /* bucle de lectura de los mensajes de un destino */
         while(true)
         {
-            /* receive the message */
+            /* consumidor de mensajes */
             msg = msgConsumer.receive();
             if (msg == null)
                break;
@@ -223,10 +194,10 @@ public class MsgConsumer
                 ackMode == Tibjms.EXPLICIT_CLIENT_DUPS_OK_ACKNOWLEDGE)
                 msg.acknowledge();
 
-            System.err.println("Received message: "+ msg);
+            System.out.println("Mensaje recibido: "+ msg);
         }
 
-        /* close the connection */
+        /* cerrar la conexión */
         connection.close();
     }
 
