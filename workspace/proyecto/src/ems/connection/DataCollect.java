@@ -1,49 +1,31 @@
 package ems.connection;
 
-/*
+/*--------------------------------------------------------------------------------------------
  * En esta clase creamos tantas listas de objetos VO (value object) como elementos queremos
  * monitorizar (a excepción del servidor de datos, que se constituye de un solo elemento VO
  * debido a que a que este elemento no ve afectados sus datos en el tiempo) y las rellenamos
  * con los datos que nos parecen pertinentes de ser mostrados posteriormente.
- */
+ *-------------------------------------------------------------------------------------------*/
 
 import java.util.ArrayList;
-
-import javax.management.openmbean.CompositeData;
-
 import com.tibco.tibjms.admin.ConnectionInfo;
 import com.tibco.tibjms.admin.ConsumerInfo;
-import com.tibco.tibjms.admin.FileStoreInfo;
 import com.tibco.tibjms.admin.ProducerInfo;
 import com.tibco.tibjms.admin.QueueInfo;
 import com.tibco.tibjms.admin.ServerInfo;
-import com.tibco.tibjms.admin.StoreInfo;
-import com.tibco.tibjms.admin.TibjmsAdmin;
-import com.tibco.tibjms.admin.TibjmsAdminException;
 import com.tibco.tibjms.admin.TopicInfo;
-
 import ems.vo.*;
 
 public class DataCollect {
 	
-	/*-----------------------------------------------------------------------
-     * Parameters
-     *----------------------------------------------------------------------*/
-	String			serverUrl	= null;
-	String			userName	= null;
-	String			password	= null;
+	public DataCollect(){}
 	
-    /*-----------------------------------------------------------------------
-     * Variables
-     *----------------------------------------------------------------------*/
-	TibjmsAdmin		connection	= null;
-	
-	
-	public DataCollect() {}
-	
-	public ServerVO getDataServer (ServerInfo infoServer) {
-		// ServerInfo infoServer = connection.getInfo();
-		// Creamos un objeto ServerVO y recogemos todos los datos
+	/*----------------------------------------------------------------------------------
+	 * Creamos un objeto ServerVO y recogemos todos los datos globales del
+	 * propio Servidor
+	 *---------------------------------------------------------------------------------*/
+	public ServerVO getDataServer (ServerInfo infoServer) 
+	{
 		ServerVO objectServer = new ServerVO();
 		objectServer.setConnectionCount(infoServer.getConnectionCount());
 		objectServer.setConsumerCount(infoServer.getConsumerCount());
@@ -66,10 +48,13 @@ public class DataCollect {
 		return objectServer;	
 	}
 	
-	public ArrayList<ConnectionVO> getDataConnections (ConnectionInfo[] connections) {
-		// Creamos una Lista de objetos ConnectionVO y añadimos todos los datos de cada conexión
+	/*----------------------------------------------------------------------------------
+	 * Creamos una Lista de objetos ConnectionVO y añadimos todos los datos 
+	 * de cada conexión
+	 *---------------------------------------------------------------------------------*/
+	public ArrayList<ConnectionVO> getDataConnections (ConnectionInfo[] connections) 
+	{
 		ArrayList<ConnectionVO> connectionsList = new ArrayList<ConnectionVO>();
-		//ConnectionInfo[] connections = connection.getConnections();
 		for (ConnectionInfo conn : connections) {
 			ConnectionVO objectConnection = new ConnectionVO();
 			objectConnection.setAddress(conn.getAddress());
@@ -87,10 +72,13 @@ public class DataCollect {
 		return connectionsList;
 	}
 	
-	public ArrayList<ConsumerVO> getDataConsumers (ConsumerInfo[] consumers) {
-		// Creamos una Lista de objetos ConsumerVO y añadimos todos los datos de cada consumidor
+	/*----------------------------------------------------------------------------------
+	 * Creamos una Lista de objetos ConsumerVO y añadimos todos los datos de cada 
+	 * consumidor
+	 *---------------------------------------------------------------------------------*/
+	public ArrayList<ConsumerVO> getDataConsumers (ConsumerInfo[] consumers) 
+	{
 		ArrayList<ConsumerVO> consumersList = new ArrayList<ConsumerVO>();
-		//ConsumerInfo[] consumers = connection.getConsumers();
 		for (ConsumerInfo consumer : consumers) {
 			ConsumerVO objectConsumer = new ConsumerVO();
 			objectConsumer.setConnectionId(consumer.getConnectionID());
@@ -106,10 +94,13 @@ public class DataCollect {
 		return consumersList;
 	}
 	
-	public ArrayList<ProducerVO> getDataProducers (ProducerInfo[] producers) {
-		// Creamos una Lista de objetos ProducerVO y añadimos todos los datos de cada productor
+	/*----------------------------------------------------------------------------------
+	 * Creamos una Lista de objetos ProducerVO y añadimos todos los datos de cada 
+	 * productor
+	 *---------------------------------------------------------------------------------*/
+	public ArrayList<ProducerVO> getDataProducers (ProducerInfo[] producers) 
+	{
 		ArrayList<ProducerVO> producersList = new ArrayList<ProducerVO>();
-		//ProducerInfo[] producers = connection.getProducersStatistics();
 		for (ProducerInfo producer : producers) {
 			ProducerVO objectProducer = new ProducerVO();
 			objectProducer.setConnectionId(producer.getConnectionID());
@@ -125,10 +116,12 @@ public class DataCollect {
 		return producersList;
 	}
 	
-	public ArrayList<QueueVO> getDataQueues (QueueInfo[] queues) {
-		// Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada cola
+	/*----------------------------------------------------------------------------------
+	 * Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada cola
+	 *---------------------------------------------------------------------------------*/
+	public ArrayList<QueueVO> getDataQueues (QueueInfo[] queues) 
+	{
 		ArrayList<QueueVO> queuesList = new ArrayList<QueueVO>();
-		//QueueInfo[] queues = connection.getQueues();
 		for (QueueInfo queue : queues) {
 			QueueVO objectQueue = new QueueVO();
 			objectQueue.setInMsgRate(queue.getInboundStatistics().getMessageRate());
@@ -144,10 +137,12 @@ public class DataCollect {
 		return queuesList;
 	}
 	
-	public ArrayList<TopicVO> getDataTopics (TopicInfo[] topics) {
-		// Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada cola
+	/*----------------------------------------------------------------------------------
+	 * Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada topic
+	 *---------------------------------------------------------------------------------*/
+	public ArrayList<TopicVO> getDataTopics (TopicInfo[] topics) 
+	{
 		ArrayList<TopicVO> topicsList = new ArrayList<TopicVO>();
-		//TopicInfo[] topics = connection.getTopics();
 		for (TopicInfo topic : topics) {
 			TopicVO objectTopic = new TopicVO();
 			objectTopic.setInMsgRate(topic.getInboundStatistics().getMessageRate());
@@ -161,28 +156,7 @@ public class DataCollect {
 			objectTopic.setConsumersCount(topic.getConsumerCount());
 			topicsList.add(objectTopic);
 		}
-		return topicsList;
-		
+		return topicsList;	
 	}
 
-	public ArrayList<StoreVO> getDataStores (String[] storesName, TibjmsAdmin connection) throws TibjmsAdminException {
-		// Creamos una Lista de objetos StoreVO y añadimos todos los datos de cada store
-		ArrayList<StoreVO> storesList = new ArrayList<StoreVO>();
-		//TibjmsAdmin connection = new TibjmsAdmin("tcp://192.168.1.11", "admin", "proyecto");
-		//FileStoreInfo infoFile = null;
-		//String[] storesName = connection.getStores();
-		for (String storeName : storesName) {
-			StoreInfo store = connection.getStoreInfo(storeName);
-			StoreVO objectStore = new StoreVO();
-			// Revisar Fragmentation y FileName (FileStoreInfo)
-			objectStore.setFileSize(store.getFileSize());
-			objectStore.setFreeSpace(store.getFreeSpace());
-			objectStore.setMsgCount(store.getMsgCount());
-			objectStore.setMsgSize(store.getMsgBytes());
-			objectStore.setName(storeName);
-			objectStore.setUsedSpace(store.getUsedSpace());
-			storesList.add(objectStore);
-		}
-		return storesList;
-	}
 }

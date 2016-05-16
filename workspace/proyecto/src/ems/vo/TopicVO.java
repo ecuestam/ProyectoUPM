@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre los topics del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class TopicVO {
 	
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos TopicVO
+	 *-------------------------------------------------------------*/
 	private String name;
 	private long pendingMsgCount;
 	private long pendingMsgSize;
@@ -14,6 +23,10 @@ public class TopicVO {
 	
 	public TopicVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos TopicVO
+	 *-------------------------------------------------------------*/
 	public String getName(){
 		return this.name;
 	}

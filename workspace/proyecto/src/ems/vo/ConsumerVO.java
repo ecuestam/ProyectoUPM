@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre los consumidores del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class ConsumerVO {
 
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos ConsumerVO
+	 *-------------------------------------------------------------*/
 	private long id;
 	private long createTime;
 	private String destinationName;
@@ -13,6 +22,10 @@ public class ConsumerVO {
 	
 	public ConsumerVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos ConsumerVO
+	 *-------------------------------------------------------------*/
 	public long getId(){
 		return this.id;
 	}

@@ -12,7 +12,7 @@ public class DbConnection {
 	static String db = "ems_db";
 	static String login = "mysql";
 	static String password = "proyecto";
-	static String url = "jdbc:mysql://192.168.1.12/"+db;
+	static String url = "jdbc:mysql://192.168.99.12/"+db;
 	 
 	Connection connection = null;
 

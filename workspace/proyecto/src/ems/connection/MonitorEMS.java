@@ -1,79 +1,87 @@
 package ems.connection;
 
-import java.io.File;
+/*--------------------------------------------------------------------------------------------
+ * Clase principal donde recogemos y comprobamos los argumentos que el usuario introduce
+ * al lanzar el MonitorEMS. Una vez comprobados los parámetros, si son correctos, esta
+ * clase empieza a orquestar la recolección de datos del servidor EMS y su posterior
+ * envío al servidor de BBDD
+ *-------------------------------------------------------------------------------------------*/
+
 import java.util.ArrayList;
-import java.util.StringTokenizer;
-
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-
 import com.tibco.tibjms.admin.ConnectionInfo;
 import com.tibco.tibjms.admin.ConsumerInfo;
 import com.tibco.tibjms.admin.ProducerInfo;
 import com.tibco.tibjms.admin.QueueInfo;
 import com.tibco.tibjms.admin.ServerInfo;
-import com.tibco.tibjms.admin.StoreInfo;
 import com.tibco.tibjms.admin.TibjmsAdmin;
 import com.tibco.tibjms.admin.TibjmsAdminException;
 import com.tibco.tibjms.admin.TopicInfo;
 import ems.vo.*;
 import db.dao.*;
 
-
-
-public class ConexionEMS 
+public class MonitorEMS 
 {
 	
     /*-----------------------------------------------------------------------
-     * Parameters
+     * Argumentos
      *----------------------------------------------------------------------*/
 	String			serverUrl	= null;
 	String			userName	= null;
 	String			password	= null;
+	int				time		= 0;
 	
     /*-----------------------------------------------------------------------
      * Variables
      *----------------------------------------------------------------------*/
 	TibjmsAdmin		connection	= null;
 	
-	public ConexionEMS(String[] args) throws InterruptedException 
+	public MonitorEMS(String[] args) throws InterruptedException 
 	{
 		
-		parseArgs(args);
+		if (args.length != 8) 
+		{
+			usage();
+		} else
+		{
+			parseArgs(args);
 		
-        /* print parameters */
-        System.err.println("\n------------------------------------------------------------------------");
-        System.err.println("conexionEMS SAMPLE");
-        System.err.println("------------------------------------------------------------------------");
-        System.err.println("Server....................... "+((serverUrl != null)?serverUrl:"localhost"));
-        System.err.println("User......................... "+((userName != null)?userName:"(null)"));
-        System.err.println("------------------------------------------------------------------------\n");
-        
-        try {
-			run();
-		} catch (TibjmsAdminException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		    /*-----------------------------------------------------------------------
+		     * Sacar por pantalla los argumentos 
+		     *----------------------------------------------------------------------*/
+	        System.err.println("\n--------------------------------------------------------------------------");
+	        System.err.println("Datos de conexion al EMS");
+	        System.err.println("--------------------------------------------------------------------------");
+	        System.err.println("Servidor........................... "+this.serverUrl);
+	        System.err.println("Usuario............................ "+this.userName);
+	        System.err.println("Tiempo entre recogidas de datos.... "+this.time/1000+" segundos");
+	        System.err.println("--------------------------------------------------------------------------\n");
+	        
+	        try {
+				run();
+			} catch (TibjmsAdminException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	/*-----------------------------------------------------------------------
-     * usage
+     * Ayuda sobre los parámetros para lanzar el monitor
      *----------------------------------------------------------------------*/
     void usage()
     {
-        System.err.println("\nUsage: conexionEMS [options]");
+        System.err.println("\nUso: MonitorEMS [opciones]");
         System.err.println("");
-        System.err.println("   where options are:");
+        System.err.println("   donde las opciones son:");
         System.err.println("");
-        System.err.println(" -server   <server URL> - EMS server URL, default is local server");
-        System.err.println(" -user     <user name>  - user name, default is null");
-        System.err.println(" -password <password>   - password, default is null");
+        System.err.println(" -server   <URL servidor> 	- URL del servidor EMS");
+        System.err.println(" -user     <usuario>		- nombre de usuario");
+        System.err.println(" -password <password>  		- password de usuario");
+        System.err.println(" -time 	   <segundos>		- tiempo entre recogidas de datos >= 5");
         System.exit(0);
     }
 	
     /*-----------------------------------------------------------------------
-     * parseArgs
+     * Parseo de los Argumentos introducidos
      *----------------------------------------------------------------------*/
 	void parseArgs(String[] args) 
 	{	
@@ -83,44 +91,47 @@ public class ConexionEMS
 		{
 			if (args[i].compareTo("-server")==0)
 			{
-				if ((i+1) >= args.length) usage();
-				serverUrl = args[i+1];
+				this.serverUrl = args[i+1];
 				i += 2;
 			}
 			else
 			if (args[i].compareTo("-user")==0)
 			{
-				if ((i+1) >= args.length) usage();
-				userName = args[i+1];
+				this.userName = args[i+1];
 				i += 2;
 			}
 			else
 			if (args[i].compareTo("-password")==0)
 			{
-				if ((i+1) >= args.length) usage();
-				password = args[i+1];
+				this.password = args[i+1];
 				i += 2;
 			}
 			else
-			if (args[i].compareTo("-help")==0)
+			if (args[i].compareTo("-time")==0)
 			{
-				usage();
+				this.time = Integer.parseInt(args[i+1])*1000;
+				if (this.time < 5000)
+				{
+					this.time = 5000;
+				}
+				i += 2;
 			}
 			else
 			{
-				System.err.println("Unrecognized parameter: "+args[i]);
+				System.err.println("Parametro desconocido: "+args[i]);
 				usage();
 			}
 		}    
 	}
 	
     /*-----------------------------------------------------------------------
-     * run
+     * Función principal donde recogemos la información del EMS y la
+     * enviamos a la tabla correspondiente en la BBDD
      *----------------------------------------------------------------------*/
 	void run() throws TibjmsAdminException, InterruptedException	
 	{
         
-        TibjmsAdmin connection = new TibjmsAdmin(serverUrl, userName, password);
+        TibjmsAdmin connection = new TibjmsAdmin(this.serverUrl, this.userName, this.password);
 		
 		while (true) {
 		
@@ -149,50 +160,45 @@ public class ConexionEMS
 			TopicInfo[] topics = connection.getTopics();
 			topicsList = collector.getDataTopics(topics);
 			
-			ArrayList<StoreVO> storesList = new ArrayList<StoreVO>();
-			String[] storesName = connection.getStores();
-			storesList = collector.getDataStores(storesName, connection);
-			
 			ServerDAO serverDB = new ServerDAO();
 			serverDB.addServerInfo(infoEMS);
 			
 			ConsumerDAO consumerDB = new ConsumerDAO();
-			for (ConsumerVO consum : consumersList) {
+			for (ConsumerVO consum : consumersList) 
+			{
 				consumerDB.addConsumerInfo(consum);
 			}
 			
 			ProducerDAO producerDB = new ProducerDAO();
-			for (ProducerVO produc : producersList) {
+			for (ProducerVO produc : producersList) 
+			{
 				producerDB.addProducerInfo(produc);
 			}
 			
 			ConnectionDAO connectionDB = new ConnectionDAO();
-			for (ConnectionVO conn : connectionsList) {
+			for (ConnectionVO conn : connectionsList) 
+			{
 				connectionDB.addConnectionInfo(conn);
 			}
 			
 			QueueDAO queueDB = new QueueDAO();
-			for (QueueVO queue :  queuesList) {
+			for (QueueVO queue :  queuesList) 
+			{
 				queueDB.addQueueInfo(queue);
 			}
 			
 			TopicDAO topicDB = new TopicDAO();
-			for (TopicVO topic : topicsList) {
+			for (TopicVO topic : topicsList) 
+			{
 				topicDB.addTopicInfo(topic);
 			}
 			
-			StoreDAO storeDB = new StoreDAO();
-			for (StoreVO store : storesList) {
-				storeDB.addStoreInfo(store);
-			}
-			
-			Thread.sleep(5000);
-			
+			Thread.sleep(this.time);
 		}
 	}
 	
 	public static void main(String[] args) throws InterruptedException
 	{
-		new ConexionEMS(args);
+		new MonitorEMS(args);
 	}
 }

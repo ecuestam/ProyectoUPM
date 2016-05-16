@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre las colas del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class QueueVO {
 
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos QueueVO
+	 *-------------------------------------------------------------*/
 	private String name;
 	private int consumersCount;
 	private long pendingMsgCount;
@@ -13,6 +22,10 @@ public class QueueVO {
 	
 	public QueueVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos QueueVO
+	 *-------------------------------------------------------------*/
 	public String getName(){
 		return this.name;
 	}

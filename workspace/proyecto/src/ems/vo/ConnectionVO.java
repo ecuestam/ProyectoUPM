@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre las conexiones del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class ConnectionVO {
 	
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos ConnectionVO
+	 *-------------------------------------------------------------*/
 	private long id;
 	private String type;
 	private String host;
@@ -15,7 +24,10 @@ public class ConnectionVO {
 
 	public ConnectionVO(){}
 	
-
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos ConnectionVO
+	 *-------------------------------------------------------------*/
 	public long getId(){
 		return this.id;
 	}

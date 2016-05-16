@@ -1,7 +1,16 @@
 package ems.vo;
 
-public class ServerConf {
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre la configuración del servidor EMS
+ *-----------------------------------------------------------------*/
+
+public class ServerConfVO {
 	
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos ServerConfVO
+	 *-------------------------------------------------------------*/
 	private int maxClientMsgSize;
 	private int maxConnections;
 	private int maxMsgMemory;
@@ -9,8 +18,12 @@ public class ServerConf {
 	private String name;
 	private String versionInfo;
 	
-	public ServerConf(){}
+	public ServerConfVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos ServerConfVO
+	 *-------------------------------------------------------------*/
 	public int getMaxClientMsgSize(){
 		return this.maxClientMsgSize;
 	}

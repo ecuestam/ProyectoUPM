@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información sobre los productores del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class ProducerVO {
 	
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos ProducerVO
+	 *-------------------------------------------------------------*/
 	private long id;
 	private long createTime;
 	private String destinationName;
@@ -13,6 +22,10 @@ public class ProducerVO {
 	
 	public ProducerVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos ProducerVO
+	 *-------------------------------------------------------------*/
 	public long getId(){
 		return this.id;
 	}

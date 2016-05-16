@@ -1,7 +1,16 @@
 package ems.vo;
 
+/*-----------------------------------------------------------------
+ * Clase donde definimos tanto la estructura como los métodos
+ * get y set de los objetos que van a contener toda la
+ * información general del servidor EMS
+ *-----------------------------------------------------------------*/
+
 public class ServerVO {
 	
+	/*--------------------------------------------------------------
+	 * Atributos de los objetos ServerVO
+	 *-------------------------------------------------------------*/
 	private int connectionCount;
 	private int consumerCount;
 	private long diskReadRate;
@@ -23,6 +32,10 @@ public class ServerVO {
 	
 	public ServerVO(){}
 	
+	/*--------------------------------------------------------------
+	 * Definición de los métodos get y set que nos permiten
+	 * acceder a los atributos de los objetos ServerVO
+	 *-------------------------------------------------------------*/
 	public int getConnectionCount(){
 		return this.connectionCount;
 	}
