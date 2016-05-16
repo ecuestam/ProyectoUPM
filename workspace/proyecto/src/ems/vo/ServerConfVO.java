@@ -13,7 +13,6 @@ public class ServerConfVO {
 	 *-------------------------------------------------------------*/
 	private String name;
 	private long startTime;
-	private int versionInfo;
 	private long maxClientMsgSize;
 	private int maxConnections;
 	private long maxMsgMemory;
@@ -40,14 +39,6 @@ public class ServerConfVO {
 	
 	public void setStartTime(long startTime){
 		this.startTime = startTime;
-	}
-
-	public int getVersionInfo(){
-		return this.versionInfo;
-	}
-	
-	public void setVersionInfo(int versionInfo){
-		this.versionInfo = versionInfo;
 	}
 	
 	public long getMaxClientMsgSize(){
