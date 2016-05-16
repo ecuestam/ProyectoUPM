@@ -13,6 +13,8 @@ package ems.client;
  *   -password  <password>
  *   -topic     <nombre topic>
  *   -queue     <nombre cola>
+ *   [-repeat   <num envios>]
+ *   [-time     <segundos>]
  *
  *---------------------------------------------------------------------------------*/
 
@@ -30,7 +32,7 @@ public class MsgProducer
     String          password     = null;
     String          name         = null;
     int				time         = 0;
-    int				repeat       = 0;
+    int				repeat       = 1;
     Vector<String>  data         = new Vector<String>();
     boolean         useTopic     = true;
 
@@ -45,7 +47,7 @@ public class MsgProducer
     public MsgProducer(String[] args)
     {
     	
-		if (args.length < 13) 
+		if (args.length < 9) 
 		{
 			usage();
 		} else
@@ -61,8 +63,8 @@ public class MsgProducer
 	        System.err.println("Servidor........................... "+this.serverUrl);
 	        System.err.println("User............................... "+this.userName);
 	        System.err.println("Destination........................ "+this.name);
-	        System.err.println("Numero de repeticiones............. "+this.repeat);
-	        System.err.println("Tiempo entre repeticiones.......... "+this.time+" segundos");
+	        System.err.println("Numero de envios................... "+this.repeat);
+	        System.err.println("Tiempo entre envios................ "+this.time+" segundos");
 	        System.err.println("Mensajes........................... ");
 	        for(int i=0;i<data.size();i++)
 	        {
@@ -95,8 +97,8 @@ public class MsgProducer
         System.err.println("   -password   <password>            - password de usuario");
         System.err.println("   -topic      <nombre topic>        - nombre del topic");
         System.err.println("   -queue      <nombre cola>         - nombre de la cola");
-        System.err.println("   -repeat     <num repeticiones>    - numero de repeticiones de envio de mensajes");
-        System.err.println("   -time       <segundos>            - tiempo entre envios de mensajes");
+        System.err.println("   [-repeat    <num envios>]         - numero de veces que se envian los mensajes");
+        System.err.println("   [-time      <segundos>]           - tiempo entre envios de mensajes");
         System.exit(0);
     }
 
