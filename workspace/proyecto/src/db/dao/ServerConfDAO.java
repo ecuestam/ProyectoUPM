@@ -13,7 +13,8 @@ public class ServerConfDAO
 {
 
 	/**
-	 * Añade la información relativa a la configuración de un servidor a la BBDD
+	 * Añade la información relativa a la configuración de un servidor a la BBDD (previamente se borran datos
+	 * anteriores)
 	 * @param server
 	 */
 	public void addServerConfInfo(ems.vo.ServerConfVO server_conf)
@@ -21,11 +22,12 @@ public class ServerConfDAO
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
-			estatuto.executeUpdate("INSERT INTO server_conf (name, start_time, version_info,"
+			estatuto.executeUpdate("DELETE * FROM server_conf");
+			estatuto.executeUpdate("INSERT INTO server_conf (name, start_time,"
 			+ "max_client_msg_size, max_connections, max_msg_memory) VALUES ('"
 			+ server_conf.getName() + "', '" + server_conf.getStartTime() + "', '"
-			+ server_conf.getVersionInfo() + "', '" + server_conf.getMaxClientMsgSize() + "', '"
-			+ server_conf.getMaxConnections() + "', '" + server_conf.getMaxMsgMemory() + "')");
+			+ server_conf.getMaxClientMsgSize() + "', '" + server_conf.getMaxConnections() + "', '"
+			+ server_conf.getMaxMsgMemory() + "')");
 		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();

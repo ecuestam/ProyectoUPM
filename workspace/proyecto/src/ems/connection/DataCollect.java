@@ -33,9 +33,6 @@ public class DataCollect {
 		objectConfServer.setMaxMsgMemory(confServer.getMaxMsgMemory());
 		objectConfServer.setName(confServer.getServerName());
 		objectConfServer.setStartTime(confServer.getStartTime());
-		//objectConfServer.setVersionInfo(confServer.getVersionInfo());
-		VersionInfo versionInfoEMS = confServer.getVersionInfo();
-		System.out.println("Version: "+versionInfoEMS.getVersionBuild());	
 		return objectConfServer;
 	}
 	

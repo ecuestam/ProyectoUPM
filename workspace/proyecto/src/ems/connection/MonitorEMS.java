@@ -132,71 +132,86 @@ public class MonitorEMS
 	{
         
 		boolean writeConfEMS = true;
+		
+		ServerVO infoEMS = new ServerVO();
+		ServerConfVO confEMS = new ServerConfVO();
+		ArrayList<ConnectionVO> connectionsList = new ArrayList<ConnectionVO>();
+		ArrayList<ConsumerVO> consumersList = new ArrayList<ConsumerVO>();
+		ArrayList<ProducerVO> producersList = new ArrayList<ProducerVO>();
+		ArrayList<QueueVO> queuesList = new ArrayList<QueueVO>();
+		ArrayList<TopicVO> topicsList = new ArrayList<TopicVO>();
+		
+		ServerDAO serverDB = new ServerDAO();
+		ServerConfDAO infoServerDB = new ServerConfDAO();
+		ConsumerDAO consumerDB = new ConsumerDAO();
+		ProducerDAO producerDB = new ProducerDAO();
+		ConnectionDAO connectionDB = new ConnectionDAO();
+		QueueDAO queueDB = new QueueDAO();
+		TopicDAO topicDB = new TopicDAO();
+		
+		DataCollect collector = new DataCollect();
+		
         TibjmsAdmin connection = new TibjmsAdmin(this.serverUrl, this.userName, this.password);
 		
 		while (true) {		
 			
-			ServerVO infoEMS = new ServerVO();
 			ServerInfo infoServer = connection.getInfo();
-			DataCollect collector = new DataCollect();
-			infoEMS = collector.getDataServer(infoServer);
+			infoEMS = collector.getDataServer(infoServer);	
 			
 			if (writeConfEMS)
 			{
-				ServerConfVO confEMS = new ServerConfVO();
 				ServerInfo confServer = connection.getInfo();
 				confEMS = collector.getConfServer(confServer);
+			}
+			
+			ConnectionInfo[] connections = connection.getConnections();
+			connectionsList.clear();
+			connectionsList = collector.getDataConnections(connections);
+			
+			ConsumerInfo[] consumers = connection.getConsumers();
+			consumersList.clear();
+			consumersList = collector.getDataConsumers(consumers);
+			
+			ProducerInfo[] producers = connection.getProducersStatistics();
+			producersList.clear();
+			producersList = collector.getDataProducers(producers);
+			
+			QueueInfo[] queues = connection.getQueues();
+			queuesList.clear();
+			queuesList = collector.getDataQueues(queues);
+			
+			TopicInfo[] topics = connection.getTopics();
+			topicsList.clear();
+			topicsList = collector.getDataTopics(topics);
+			
+			serverDB.addServerInfo(infoEMS);
+			
+			if (writeConfEMS)
+			{
+				infoServerDB.addServerConfInfo(confEMS);
 				writeConfEMS = false;
 			}
 			
-			ArrayList<ConnectionVO> connectionsList = new ArrayList<ConnectionVO>();
-			ConnectionInfo[] connections = connection.getConnections();
-			connectionsList = collector.getDataConnections(connections);
-			
-			ArrayList<ConsumerVO> consumersList = new ArrayList<ConsumerVO>();
-			ConsumerInfo[] consumers = connection.getConsumers();
-			consumersList = collector.getDataConsumers(consumers);
-			
-			ArrayList<ProducerVO> producersList = new ArrayList<ProducerVO>();
-			ProducerInfo[] producers = connection.getProducersStatistics();
-			producersList = collector.getDataProducers(producers);
-			
-			ArrayList<QueueVO> queuesList = new ArrayList<QueueVO>();
-			QueueInfo[] queues = connection.getQueues();
-			queuesList = collector.getDataQueues(queues);
-			
-			ArrayList<TopicVO> topicsList = new ArrayList<TopicVO>();
-			TopicInfo[] topics = connection.getTopics();
-			topicsList = collector.getDataTopics(topics);
-			
-			ServerDAO serverDB = new ServerDAO();
-			serverDB.addServerInfo(infoEMS);
-			
-			ConsumerDAO consumerDB = new ConsumerDAO();
 			for (ConsumerVO consum : consumersList) 
 			{
 				consumerDB.addConsumerInfo(consum);
 			}
 			
-			ProducerDAO producerDB = new ProducerDAO();
 			for (ProducerVO produc : producersList) 
 			{
 				producerDB.addProducerInfo(produc);
 			}
 			
-			ConnectionDAO connectionDB = new ConnectionDAO();
 			for (ConnectionVO conn : connectionsList) 
 			{
 				connectionDB.addConnectionInfo(conn);
 			}
 			
-			QueueDAO queueDB = new QueueDAO();
 			for (QueueVO queue :  queuesList) 
 			{
 				queueDB.addQueueInfo(queue);
 			}
 			
-			TopicDAO topicDB = new TopicDAO();
 			for (TopicVO topic : topicsList) 
 			{
 				topicDB.addTopicInfo(topic);
