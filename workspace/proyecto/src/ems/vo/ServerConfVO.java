@@ -11,12 +11,13 @@ public class ServerConfVO {
 	/*--------------------------------------------------------------
 	 * Atributos de los objetos ServerConfVO
 	 *-------------------------------------------------------------*/
+	private String name;
+	private long startTime;
+	private String versionInfo;
 	private int maxClientMsgSize;
 	private int maxConnections;
 	private int maxMsgMemory;
-	private long startTime;
-	private String name;
-	private String versionInfo;
+	
 	
 	public ServerConfVO(){}
 	
@@ -24,6 +25,31 @@ public class ServerConfVO {
 	 * Definición de los métodos get y set que nos permiten
 	 * acceder a los atributos de los objetos ServerConfVO
 	 *-------------------------------------------------------------*/
+	
+	public String getName(){
+		return this.name;
+	}
+	
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	public long getStartTime(){
+		return this.startTime;
+	}
+	
+	public void setStartTime(long startTime){
+		this.startTime = startTime;
+	}
+
+	public String getVersionInfo(){
+		return this.versionInfo;
+	}
+	
+	public void setVersionInfo(String versionInfo){
+		this.versionInfo = versionInfo;
+	}
+	
 	public int getMaxClientMsgSize(){
 		return this.maxClientMsgSize;
 	}
@@ -46,30 +72,6 @@ public class ServerConfVO {
 	
 	public void setMaxMsgMemory(int maxMsgMemory){
 		this.maxMsgMemory = maxMsgMemory;
-	}
-
-	public long getStartTime(){
-		return this.startTime;
-	}
-	
-	public void setStartTime(long startTime){
-		this.startTime = startTime;
-	}
-
-	public String getName(){
-		return this.name;
-	}
-	
-	public void setName(String name){
-		this.name = name;
-	}
-
-	public String getVersionInfo(){
-		return this.versionInfo;
-	}
-	
-	public void setVersionInfo(String versionInfo){
-		this.versionInfo = versionInfo;
 	}
 
 }
