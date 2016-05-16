@@ -14,6 +14,8 @@ import com.tibco.tibjms.admin.ProducerInfo;
 import com.tibco.tibjms.admin.QueueInfo;
 import com.tibco.tibjms.admin.ServerInfo;
 import com.tibco.tibjms.admin.TopicInfo;
+import com.tibco.tibjms.admin.VersionInfo;
+
 import ems.vo.*;
 
 public class DataCollect {
@@ -21,8 +23,25 @@ public class DataCollect {
 	public DataCollect(){}
 	
 	/*----------------------------------------------------------------------------------
+	 * Creamos un objeto ServerConfVO y recogemos la configuración del servidor EMS
+	 *---------------------------------------------------------------------------------*/
+	public ServerConfVO getConfServer (ServerInfo confServer)
+	{
+		ServerConfVO objectConfServer = new ServerConfVO();
+		objectConfServer.setMaxClientMsgSize(confServer.getMaxClientMsgSize());
+		objectConfServer.setMaxConnections(confServer.getMaxConnections());
+		objectConfServer.setMaxMsgMemory(confServer.getMaxMsgMemory());
+		objectConfServer.setName(confServer.getServerName());
+		objectConfServer.setStartTime(confServer.getStartTime());
+		//objectConfServer.setVersionInfo(confServer.getVersionInfo());
+		VersionInfo versionInfoEMS = confServer.getVersionInfo();
+		System.out.println("Version: "+versionInfoEMS.getVersionBuild());	
+		return objectConfServer;
+	}
+	
+	/*----------------------------------------------------------------------------------
 	 * Creamos un objeto ServerVO y recogemos todos los datos globales del
-	 * propio Servidor
+	 * propio servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ServerVO getDataServer (ServerInfo infoServer) 
 	{
@@ -50,7 +69,7 @@ public class DataCollect {
 	
 	/*----------------------------------------------------------------------------------
 	 * Creamos una Lista de objetos ConnectionVO y añadimos todos los datos 
-	 * de cada conexión
+	 * de cada conexión del servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ArrayList<ConnectionVO> getDataConnections (ConnectionInfo[] connections) 
 	{
@@ -74,7 +93,7 @@ public class DataCollect {
 	
 	/*----------------------------------------------------------------------------------
 	 * Creamos una Lista de objetos ConsumerVO y añadimos todos los datos de cada 
-	 * consumidor
+	 * consumidor del servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ArrayList<ConsumerVO> getDataConsumers (ConsumerInfo[] consumers) 
 	{
@@ -96,7 +115,7 @@ public class DataCollect {
 	
 	/*----------------------------------------------------------------------------------
 	 * Creamos una Lista de objetos ProducerVO y añadimos todos los datos de cada 
-	 * productor
+	 * productor del servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ArrayList<ProducerVO> getDataProducers (ProducerInfo[] producers) 
 	{
@@ -118,6 +137,7 @@ public class DataCollect {
 	
 	/*----------------------------------------------------------------------------------
 	 * Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada cola
+	 * del servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ArrayList<QueueVO> getDataQueues (QueueInfo[] queues) 
 	{
@@ -139,6 +159,7 @@ public class DataCollect {
 	
 	/*----------------------------------------------------------------------------------
 	 * Creamos una Lista de objetos QueueVO y añadimos todos los datos de cada topic
+	 * del servidor EMS
 	 *---------------------------------------------------------------------------------*/
 	public ArrayList<TopicVO> getDataTopics (TopicInfo[] topics) 
 	{

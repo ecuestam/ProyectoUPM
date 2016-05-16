@@ -131,14 +131,23 @@ public class MonitorEMS
 	void run() throws TibjmsAdminException, InterruptedException	
 	{
         
+		boolean writeConfEMS = true;
         TibjmsAdmin connection = new TibjmsAdmin(this.serverUrl, this.userName, this.password);
 		
-		while (true) {
-		
+		while (true) {		
+			
 			ServerVO infoEMS = new ServerVO();
 			ServerInfo infoServer = connection.getInfo();
 			DataCollect collector = new DataCollect();
 			infoEMS = collector.getDataServer(infoServer);
+			
+			if (writeConfEMS)
+			{
+				ServerConfVO confEMS = new ServerConfVO();
+				ServerInfo confServer = connection.getInfo();
+				confEMS = collector.getConfServer(confServer);
+				writeConfEMS = false;
+			}
 			
 			ArrayList<ConnectionVO> connectionsList = new ArrayList<ConnectionVO>();
 			ConnectionInfo[] connections = connection.getConnections();

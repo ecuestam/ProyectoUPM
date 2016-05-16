@@ -13,10 +13,10 @@ public class ServerConfVO {
 	 *-------------------------------------------------------------*/
 	private String name;
 	private long startTime;
-	private String versionInfo;
-	private int maxClientMsgSize;
+	private int versionInfo;
+	private long maxClientMsgSize;
 	private int maxConnections;
-	private int maxMsgMemory;
+	private long maxMsgMemory;
 	
 	
 	public ServerConfVO(){}
@@ -42,20 +42,20 @@ public class ServerConfVO {
 		this.startTime = startTime;
 	}
 
-	public String getVersionInfo(){
+	public int getVersionInfo(){
 		return this.versionInfo;
 	}
 	
-	public void setVersionInfo(String versionInfo){
+	public void setVersionInfo(int versionInfo){
 		this.versionInfo = versionInfo;
 	}
 	
-	public int getMaxClientMsgSize(){
+	public long getMaxClientMsgSize(){
 		return this.maxClientMsgSize;
 	}
 	
-	public void setMaxClientMsgSize(int maxClientMsgSize){
-		this.maxClientMsgSize = maxClientMsgSize;
+	public void setMaxClientMsgSize(long l){
+		this.maxClientMsgSize = l;
 	}
 
 	public int getMaxConnections(){
@@ -66,12 +66,12 @@ public class ServerConfVO {
 		this.maxConnections = maxConnections;
 	}
 
-	public int getMaxMsgMemory(){
+	public long getMaxMsgMemory(){
 		return this.maxMsgMemory;
 	}
 	
-	public void setMaxMsgMemory(int maxMsgMemory){
-		this.maxMsgMemory = maxMsgMemory;
+	public void setMaxMsgMemory(long l){
+		this.maxMsgMemory = l;
 	}
 
 }
