@@ -19,7 +19,6 @@ package ems.client;
  *---------------------------------------------------------------------------------*/
 
 import java.util.*;
-
 import javax.jms.*;
 
 public class MsgProducer
@@ -61,8 +60,8 @@ public class MsgProducer
 	        System.err.println("Cliente de EMS consumidor de mensajes");
 	        System.err.println("--------------------------------------------------------------------------");
 	        System.err.println("Servidor........................... "+this.serverUrl);
-	        System.err.println("User............................... "+this.userName);
-	        System.err.println("Destination........................ "+this.name);
+	        System.err.println("Usuario............................ "+this.userName);
+	        System.err.println("Destino............................ "+this.name);
 	        System.err.println("Numero de envios................... "+this.repeat);
 	        System.err.println("Tiempo entre envios................ "+this.time+" segundos");
 	        System.err.println("Mensajes........................... ");
@@ -99,6 +98,7 @@ public class MsgProducer
         System.err.println("   -queue      <nombre cola>         - nombre de la cola");
         System.err.println("   [-repeat    <num envios>]         - numero de veces que se envian los mensajes");
         System.err.println("   [-time      <segundos>]           - tiempo entre envios de mensajes");
+        System.err.println("");
         System.exit(0);
     }
 

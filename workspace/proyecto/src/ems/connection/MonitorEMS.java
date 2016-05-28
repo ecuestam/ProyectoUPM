@@ -28,7 +28,7 @@ public class MonitorEMS
 	String			serverUrl	= null;
 	String			userName	= null;
 	String			password	= null;
-	int				time		= 0;
+	int				time		= 5000;  // Por defecto, 5 segundos
 	
     /*-----------------------------------------------------------------------
      * Variables
@@ -38,7 +38,7 @@ public class MonitorEMS
 	public MonitorEMS(String[] args) throws InterruptedException 
 	{
 		
-		if (args.length != 8) 
+		if ((args.length < 6) || (args.length == 7) || (args.length > 8)) 
 		{
 			usage();
 		} else
@@ -76,7 +76,8 @@ public class MonitorEMS
         System.err.println(" -server   <URL servidor> 	- URL del servidor EMS");
         System.err.println(" -user     <usuario>		- nombre de usuario");
         System.err.println(" -password <password>  		- password de usuario");
-        System.err.println(" -time 	   <segundos>		- tiempo entre recogidas de datos >= 5");
+        System.err.println(" [-time    <segundos>]		- tiempo entre recogidas de datos >= 5 (por defecto 5)");
+        System.err.println("");
         System.exit(0);
     }
 	

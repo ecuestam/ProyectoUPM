@@ -17,7 +17,6 @@ package ems.client;
  *---------------------------------------------------------------------------------*/
 
 import javax.jms.*;
-
 import com.tibco.tibjms.Tibjms;
 
 public class MsgConsumer
@@ -58,8 +57,8 @@ public class MsgConsumer
 	        System.err.println("Cliente de EMS consumidor de mensajes");
 	        System.err.println("--------------------------------------------------------------------------");
 	        System.err.println("Servidor........................... "+this.serverUrl);
-	        System.err.println("User............................... "+this.userName);
-	        System.err.println("Destination........................ "+this.name);
+	        System.err.println("Usuario............................ "+this.userName);
+	        System.err.println("Destino............................ "+this.name);
 	        System.err.println("--------------------------------------------------------------------------\n");
 	
 	        try {
@@ -85,6 +84,7 @@ public class MsgConsumer
         System.err.println("   -password <password>		- password de usuario");
         System.err.println("   -topic    <nombre topic>	- nombre del topic");
         System.err.println("   -queue    <nombre cola>	- nombre de la cola");
+        System.err.println("");
         System.exit(0);
     }
 

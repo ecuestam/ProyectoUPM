@@ -14,7 +14,6 @@ import com.tibco.tibjms.admin.ProducerInfo;
 import com.tibco.tibjms.admin.QueueInfo;
 import com.tibco.tibjms.admin.ServerInfo;
 import com.tibco.tibjms.admin.TopicInfo;
-import com.tibco.tibjms.admin.VersionInfo;
 
 import ems.vo.*;
 
