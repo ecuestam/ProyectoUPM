@@ -85,7 +85,7 @@ public class MsgProducer
      *----------------------------------------------------------------------*/
     private void usage()
     {
-        System.err.println("\nUso: java -jar MsgProducer [opciones]");
+        System.err.println("\nUso: java -jar MsgProducer.jar [opciones]");
         System.err.println("                        <mensaje de texto 1>");
         System.err.println("                       [<mensaje de texto 2>] ...");
         System.err.println("");
@@ -197,7 +197,7 @@ public class MsgProducer
             destination = session.createQueue(name);
 
         /* crear el productor */
-        msgProducer = session.createProducer(null);
+        msgProducer = session.createProducer(destination);
 
         /* publicar mensajes */
         for (cont = 0; cont<repeat; cont++)
@@ -211,7 +211,7 @@ public class MsgProducer
                 msg.setText((String)data.elementAt(i));
 
                 /* publicar mensaje */
-                msgProducer.send(destination, msg);
+                msgProducer.send(msg);
 
                 System.err.println("Published message: "+data.elementAt(i));
             }

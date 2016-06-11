@@ -75,7 +75,7 @@ public class MsgConsumer
      *----------------------------------------------------------------------*/
     void usage()
     {
-        System.err.println("\nUso: java -jar MsgConsumer [opciones]");
+        System.err.println("\nUso: java -jar MsgConsumer.jar [opciones]");
         System.err.println("");
         System.err.println(" las opciones son:");
         System.err.println("");

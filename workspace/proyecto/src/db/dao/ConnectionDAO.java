@@ -1,13 +1,9 @@
 package db.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import db.connection.DbConnection;
-import ems.vo.ConnectionVO;
 
 /**
  * Clase que permite el acceso a la base de datos
@@ -31,7 +27,6 @@ public class ConnectionDAO {
 			+ connection.getConsumerCount() + "', '" + connection.getProducerCount() + "', '"
 			+ connection.getSessionCount() + "', '" + connection.getStartTime() + "', '"
 			+ connection.getUpTime() + "', '" + connection.getUsername() + "')");
-		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();
 

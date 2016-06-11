@@ -30,8 +30,8 @@ public class TopicDAO {
 				+ topic.getOutMsgRate() + "')");
 				
 				estatuto.close();
-				conexion.desconectar();
 			}
+			conexion.desconectar();
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

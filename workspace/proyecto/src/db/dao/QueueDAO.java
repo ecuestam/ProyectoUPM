@@ -29,8 +29,8 @@ public class QueueDAO {
 				+ queue.getInMsgRate() + "', '" + queue.getOutMsgRate() + "')");
 				
 				estatuto.close();
-				conexion.desconectar();
 			}
+			conexion.desconectar();
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

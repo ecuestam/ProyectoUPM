@@ -27,9 +27,10 @@ public class ConsumerDAO {
 				+ consumer.getDestinationName() + "', '" + consumer.getDestinationType() + "', '"
 				+ consumer.getConnectionId() + "', '" + consumer.getSessionId() + "', '"
 				+ consumer.getMsgRate() + "', '" + consumer.getTotalMsgs() + "')");
+				
 				estatuto.close();
-				conexion.desconectar();
 			}
+			conexion.desconectar();
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

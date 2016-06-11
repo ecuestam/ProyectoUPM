@@ -27,9 +27,10 @@ public class ProducerDAO {
 				+ producer.getDestinationName() + "', '" + producer.getDestinationType() + "', '"
 				+ producer.getConnectionId() + "', '" + producer.getSessionId() + "', '"
 				+ producer.getMsgRate() + "', '" + producer.getTotalMsgs() + "')");
+				
 				estatuto.close();
-				conexion.desconectar();
 			}
+			conexion.desconectar();
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

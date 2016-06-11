@@ -22,13 +22,12 @@ public class ServerConfDAO
 		DbConnection conexion = new DbConnection();
 		try {
 			Statement estatuto = conexion.getConnection().createStatement();
-			estatuto.executeUpdate("DELETE * FROM server_conf");
+			estatuto.executeUpdate("DELETE FROM server_conf");
 			estatuto.executeUpdate("INSERT INTO server_conf (name, start_time,"
 			+ "max_client_msg_size, max_connections, max_msg_memory) VALUES ('"
 			+ server_conf.getName() + "', '" + server_conf.getStartTime() + "', '"
 			+ server_conf.getMaxClientMsgSize() + "', '" + server_conf.getMaxConnections() + "', '"
 			+ server_conf.getMaxMsgMemory() + "')");
-		//JOptionPane.showMessageDialog(null, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
 		estatuto.close();
 		conexion.desconectar();
 
